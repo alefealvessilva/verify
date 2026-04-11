@@ -1,4 +1,4 @@
-abstract class UserPreferencesError {
+abstract class UserPreferencesError implements Exception {
   String get message;
 }
 

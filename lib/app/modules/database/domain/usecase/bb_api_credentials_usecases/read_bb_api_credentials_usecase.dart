@@ -5,7 +5,7 @@ import 'package:verify/app/modules/database/domain/repository/api_credentials_re
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 abstract class ReadBBApiCredentialsUseCase {
-  Future<Result<BBApiCredentialsEntity, ApiCredentialsError>> call({
+  Future<ResultDart<BBApiCredentialsEntity, ApiCredentialsError>> call({
     required Database database,
     required String id,
   });
@@ -15,7 +15,7 @@ class ReadBBApiCredentialsUseCaseImpl implements ReadBBApiCredentialsUseCase {
   final ApiCredentialsRepository _apiCredentialsRepository;
   ReadBBApiCredentialsUseCaseImpl(this._apiCredentialsRepository);
   @override
-  Future<Result<BBApiCredentialsEntity, ApiCredentialsError>> call({
+  Future<ResultDart<BBApiCredentialsEntity, ApiCredentialsError>> call({
     required Database database,
     required String id,
   }) async {

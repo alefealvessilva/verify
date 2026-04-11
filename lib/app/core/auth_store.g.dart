@@ -49,12 +49,36 @@ mixin _$AuthStore on AuthStoreBase, Store {
     });
   }
 
+  late final _$tenantAtom =
+      Atom(name: 'AuthStoreBase.tenant', context: context);
+
+  @override
+  TenantModel? get tenant {
+    _$tenantAtom.reportRead();
+    return super.tenant;
+  }
+
+  @override
+  set tenant(TenantModel? value) {
+    _$tenantAtom.reportWrite(value, super.tenant, () {
+      super.tenant = value;
+    });
+  }
+
   late final _$loadDataAsyncAction =
       AsyncAction('AuthStoreBase.loadData', context: context);
 
   @override
   Future<void> loadData() {
     return _$loadDataAsyncAction.run(() => super.loadData());
+  }
+
+  late final _$signOutAsyncAction =
+      AsyncAction('AuthStoreBase.signOut', context: context);
+
+  @override
+  Future<void> signOut() {
+    return _$signOutAsyncAction.run(() => super.signOut());
   }
 
   late final _$AuthStoreBaseActionController =
@@ -87,6 +111,7 @@ mixin _$AuthStore on AuthStoreBase, Store {
     return '''
 loading: ${loading},
 loggedUser: ${loggedUser},
+tenant: ${tenant},
 userName: ${userName}
     ''';
   }

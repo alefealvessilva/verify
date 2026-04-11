@@ -9,57 +9,93 @@ part of 'timeline_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$TimelineStore on TimelineStoreBase, Store {
-  Computed<bool>? _$showTodayFabComputed;
+  Computed<bool>? _$isSicoobSelectedComputed;
 
   @override
-  bool get showTodayFab =>
-      (_$showTodayFabComputed ??= Computed<bool>(() => super.showTodayFab,
-              name: 'TimelineStoreBase.showTodayFab'))
-          .value;
-  Computed<bool>? _$selectedSicoobComputed;
+  bool get isSicoobSelected => (_$isSicoobSelectedComputed ??= Computed<bool>(
+          () => super.isSicoobSelected,
+          name: 'TimelineStoreBase.isSicoobSelected'))
+      .value;
+
+  late final _$isLoadingTransactionsAtom =
+      Atom(name: 'TimelineStoreBase.isLoadingTransactions', context: context);
 
   @override
-  bool get selectedSicoob =>
-      (_$selectedSicoobComputed ??= Computed<bool>(() => super.selectedSicoob,
-              name: 'TimelineStoreBase.selectedSicoob'))
-          .value;
-  Computed<bool>? _$selectedBBComputed;
-
-  @override
-  bool get selectedBB =>
-      (_$selectedBBComputed ??= Computed<bool>(() => super.selectedBB,
-              name: 'TimelineStoreBase.selectedBB'))
-          .value;
-
-  late final _$selectedDateAtom =
-      Atom(name: 'TimelineStoreBase.selectedDate', context: context);
-
-  @override
-  DateTime get selectedDate {
-    _$selectedDateAtom.reportRead();
-    return super.selectedDate;
+  bool get isLoadingTransactions {
+    _$isLoadingTransactionsAtom.reportRead();
+    return super.isLoadingTransactions;
   }
 
   @override
-  set selectedDate(DateTime value) {
-    _$selectedDateAtom.reportWrite(value, super.selectedDate, () {
-      super.selectedDate = value;
+  set isLoadingTransactions(bool value) {
+    _$isLoadingTransactionsAtom.reportWrite(value, super.isLoadingTransactions,
+        () {
+      super.isLoadingTransactions = value;
     });
   }
 
-  late final _$selectedAccountAtom =
-      Atom(name: 'TimelineStoreBase.selectedAccount', context: context);
+  late final _$transactionsAtom =
+      Atom(name: 'TimelineStoreBase.transactions', context: context);
 
   @override
-  int get selectedAccount {
-    _$selectedAccountAtom.reportRead();
-    return super.selectedAccount;
+  List<VerifyPixModel> get transactions {
+    _$transactionsAtom.reportRead();
+    return super.transactions;
   }
 
   @override
-  set selectedAccount(int value) {
-    _$selectedAccountAtom.reportWrite(value, super.selectedAccount, () {
-      super.selectedAccount = value;
+  set transactions(List<VerifyPixModel> value) {
+    _$transactionsAtom.reportWrite(value, super.transactions, () {
+      super.transactions = value;
+    });
+  }
+
+  late final _$searchQueryAtom =
+      Atom(name: 'TimelineStoreBase.searchQuery', context: context);
+
+  @override
+  String get searchQuery {
+    _$searchQueryAtom.reportRead();
+    return super.searchQuery;
+  }
+
+  @override
+  set searchQuery(String value) {
+    _$searchQueryAtom.reportWrite(value, super.searchQuery, () {
+      super.searchQuery = value;
+    });
+  }
+
+  late final _$selectedDateRangeAtom =
+      Atom(name: 'TimelineStoreBase.selectedDateRange', context: context);
+
+  @override
+  DateTimeRange<DateTime> get selectedDateRange {
+    _$selectedDateRangeAtom.reportRead();
+    return super.selectedDateRange;
+  }
+
+  @override
+  set selectedDateRange(DateTimeRange<DateTime> value) {
+    _$selectedDateRangeAtom.reportWrite(value, super.selectedDateRange, () {
+      super.selectedDateRange = value;
+    });
+  }
+
+  late final _$selectedAccountIndexAtom =
+      Atom(name: 'TimelineStoreBase.selectedAccountIndex', context: context);
+
+  @override
+  int get selectedAccountIndex {
+    _$selectedAccountIndexAtom.reportRead();
+    return super.selectedAccountIndex;
+  }
+
+  @override
+  set selectedAccountIndex(int value) {
+    _$selectedAccountIndexAtom.reportWrite(value, super.selectedAccountIndex,
+        () {
+      super.selectedAccountIndex = value;
     });
   }
 
@@ -67,22 +103,55 @@ mixin _$TimelineStore on TimelineStoreBase, Store {
       ActionController(name: 'TimelineStoreBase', context: context);
 
   @override
-  void setSelectedDate(DateTime date) {
+  void setIsLoadingTransactions(bool value) {
     final _$actionInfo = _$TimelineStoreBaseActionController.startAction(
-        name: 'TimelineStoreBase.setSelectedDate');
+        name: 'TimelineStoreBase.setIsLoadingTransactions');
     try {
-      return super.setSelectedDate(date);
+      return super.setIsLoadingTransactions(value);
     } finally {
       _$TimelineStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setselectedAccount(int selected) {
+  void setTransactions(List<VerifyPixModel> value) {
     final _$actionInfo = _$TimelineStoreBaseActionController.startAction(
-        name: 'TimelineStoreBase.setselectedAccount');
+        name: 'TimelineStoreBase.setTransactions');
     try {
-      return super.setselectedAccount(selected);
+      return super.setTransactions(value);
+    } finally {
+      _$TimelineStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSearchQuery(String value) {
+    final _$actionInfo = _$TimelineStoreBaseActionController.startAction(
+        name: 'TimelineStoreBase.setSearchQuery');
+    try {
+      return super.setSearchQuery(value);
+    } finally {
+      _$TimelineStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSelectedDateRange(DateTimeRange<DateTime> value) {
+    final _$actionInfo = _$TimelineStoreBaseActionController.startAction(
+        name: 'TimelineStoreBase.setSelectedDateRange');
+    try {
+      return super.setSelectedDateRange(value);
+    } finally {
+      _$TimelineStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSelectedAccountIndex(int value) {
+    final _$actionInfo = _$TimelineStoreBaseActionController.startAction(
+        name: 'TimelineStoreBase.setSelectedAccountIndex');
+    try {
+      return super.setSelectedAccountIndex(value);
     } finally {
       _$TimelineStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -91,11 +160,12 @@ mixin _$TimelineStore on TimelineStoreBase, Store {
   @override
   String toString() {
     return '''
-selectedDate: ${selectedDate},
-selectedAccount: ${selectedAccount},
-showTodayFab: ${showTodayFab},
-selectedSicoob: ${selectedSicoob},
-selectedBB: ${selectedBB}
+isLoadingTransactions: ${isLoadingTransactions},
+transactions: ${transactions},
+searchQuery: ${searchQuery},
+selectedDateRange: ${selectedDateRange},
+selectedAccountIndex: ${selectedAccountIndex},
+isSicoobSelected: ${isSicoobSelected}
     ''';
   }
 }

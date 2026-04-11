@@ -1,8 +1,8 @@
 part of 'theme.dart';
 
 RadioThemeData get _lightRadioTheme => RadioThemeData(
-      fillColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _lightColorScheme.primary;
         } else {
           return _lightColorScheme.secondary;
@@ -11,8 +11,8 @@ RadioThemeData get _lightRadioTheme => RadioThemeData(
     );
 
 RadioThemeData get _darkRadioTheme => RadioThemeData(
-      fillColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _darkColorScheme.primary;
         } else {
           return _darkColorScheme.secondary;

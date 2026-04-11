@@ -4,7 +4,7 @@ import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
 
 abstract class LoginWithGoogleUseCase {
-  Future<Result<LoggedUserInfoEntity, AuthError>> call();
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> call();
 }
 
 class LoginWithGoogleImpl implements LoginWithGoogleUseCase {
@@ -12,7 +12,7 @@ class LoginWithGoogleImpl implements LoginWithGoogleUseCase {
   LoginWithGoogleImpl(this._authRepository);
 
   @override
-  Future<Result<LoggedUserInfoEntity, AuthError>> call() async {
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> call() async {
     return _authRepository.loginWithGoogle();
   }
 }

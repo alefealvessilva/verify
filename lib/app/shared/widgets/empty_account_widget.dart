@@ -40,18 +40,21 @@ class _EmptyAccountWidgetState extends State<EmptyAccountWidget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Lottie.asset(
+                    'assets/animations/emptyAccounts.json',
+                    height: 200,
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Text(
                   'Configure sua conta para ter acesso aos nossos serviços',
                   textAlign: TextAlign.center,
                   style: textTheme.titleMedium!.copyWith(
                     color: colorScheme.primary,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
-                  ),
-                ),
-                Expanded(
-                  child: Lottie.asset(
-                    'assets/animations/emptyAccounts.json',
                   ),
                 ),
               ],

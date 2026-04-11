@@ -17,7 +17,7 @@ class TransactionsNotFoundWidget extends StatelessWidget {
           size: 70,
           shadows: [
             Shadow(
-              color: colorScheme.primary.withOpacity(0.3),
+              color: colorScheme.primary.withValues(alpha: 0.3),
               offset: const Offset(3, 3),
               blurRadius: 20,
             ),

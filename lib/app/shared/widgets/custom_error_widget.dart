@@ -17,7 +17,7 @@ class CustomErrorWidget extends StatelessWidget {
           size: 100,
           shadows: [
             Shadow(
-              color: Colors.red.withOpacity(0.3),
+              color: Colors.red.withValues(alpha: 0.3),
               offset: const Offset(3, 3),
               blurRadius: 20,
             ),

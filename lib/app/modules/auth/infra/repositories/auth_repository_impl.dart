@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
@@ -17,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<LoggedUserInfoEntity, AuthError>> loginWithGoogle() async {
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> loginWithGoogle() async {
     try {
       final user = await _authDataSource.loginWithGoogle();
       return Success(user);
@@ -31,7 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<LoggedUserInfoEntity, AuthError>> loginWithEmail({
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> loginWithEmail({
     required String email,
     required String password,
   }) async {
@@ -53,10 +51,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<void, AuthError>> logout() async {
+  Future<ResultDart<Unit, AuthError>> logout() async {
     try {
       await _authDataSource.logout();
-      return const Success(Void);
+      return Success(unit);
     } on ErrorLogout catch (e) {
       return Failure(e);
     } catch (e) {
@@ -67,7 +65,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<LoggedUserInfoEntity, AuthError>> registerWithEmail({
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> registerWithEmail({
     required String email,
     required String password,
   }) async {
@@ -89,12 +87,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<void, AuthError>> sendRecoverInstructions({
+  Future<ResultDart<Unit, AuthError>> sendRecoverInstructions({
     required String email,
   }) async {
     try {
       await _authDataSource.sendRecoverInstructions(email: email);
-      return const Success(Void);
+      return Success(unit);
     } on ErrorRecoverAccount catch (e) {
       return Failure(e);
     } catch (e) {

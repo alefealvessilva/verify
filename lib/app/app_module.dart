@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verify/app/core/admob_store.dart';
 import 'package:verify/app/core/api_credentials_store.dart';
@@ -14,6 +13,12 @@ import 'package:verify/app/modules/auth/presenter/login/view/login_page.dart';
 import 'package:verify/app/modules/auth/presenter/recover/controller/recover_account_page_controller.dart';
 import 'package:verify/app/modules/auth/presenter/recover/store/recover_account_store.dart';
 import 'package:verify/app/modules/auth/presenter/recover/view/recover_account_page.dart';
+import 'package:verify/app/core/remote_config_store.dart';
+import 'package:verify/app/modules/config/maintenance/view/maintenance_page.dart';
+import 'package:verify/app/modules/config/maintenance/view/update_page.dart';
+import 'package:verify/app/modules/auth/presenter/onboarding/controller/onboarding_controller.dart';
+import 'package:verify/app/modules/auth/presenter/onboarding/store/onboarding_store.dart';
+import 'package:verify/app/modules/auth/presenter/onboarding/view/onboarding_page.dart';
 import 'package:verify/app/modules/auth/presenter/register/controller/register_controller.dart';
 import 'package:verify/app/modules/auth/presenter/register/store/register_store.dart';
 import 'package:verify/app/modules/auth/presenter/register/view/register_page.dart';
@@ -22,7 +27,11 @@ import 'package:verify/app/modules/config/bb_settings/store/bb_settings_store.da
 import 'package:verify/app/modules/config/bb_settings/view/bb_settings_page.dart';
 import 'package:verify/app/modules/config/settings/controller/settings_page_controller.dart';
 import 'package:verify/app/modules/config/settings/view/settings_page.dart';
+import 'package:verify/app/modules/config/management/controller/member_management_controller.dart';
+import 'package:verify/app/modules/config/management/store/member_management_store.dart';
+import 'package:verify/app/modules/config/management/view/member_management_page.dart';
 import 'package:verify/app/modules/config/sicoob_settings/controller/sicoob_settings_page_controller.dart';
+import 'package:verify/app/modules/auth/presenter/waiting/view/waiting_approval_page.dart';
 import 'package:verify/app/modules/config/sicoob_settings/store/sicoob_settings_store.dart';
 import 'package:verify/app/modules/config/sicoob_settings/view/sicoob_settings_page.dart';
 import 'package:verify/app/modules/database/domain/usecase/bb_api_credentials_usecases/read_bb_api_credentials_usecase.dart';
@@ -50,17 +59,20 @@ import 'package:verify/app/modules/auth/domain/usecase/login_with_google_usecase
 import 'package:verify/app/modules/auth/domain/usecase/logout_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/recover_account_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/register_with_email_usecase.dart';
-import 'package:verify/app/modules/auth/external/datasource/firebase/error_handler/firebase_auth_error_handler.dart';
-import 'package:verify/app/modules/auth/external/datasource/firebase/firebase_datasource_impl.dart';
+import 'package:verify/app/modules/auth/external/datasource/supabase/error_handler/supabase_auth_error_handler.dart';
+import 'package:verify/app/modules/auth/external/datasource/supabase/supabase_datasource_impl.dart';
+import 'package:verify/app/modules/auth/external/datasource/supabase/supabase_profile_datasource_impl.dart';
 import 'package:verify/app/modules/auth/infra/datasource/auth_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/repositories/auth_repository_impl.dart';
+import 'package:verify/app/modules/auth/domain/usecase/tenant_usecases.dart';
 import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
 import 'package:verify/app/modules/database/domain/repository/user_preferences_repository.dart';
 import 'package:verify/app/modules/database/domain/usecase/sicoob_api_credentials_usecases/save_sicoob_api_credentials_usecase.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/read_user_theme_mode_preference_usecase.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/save_user_theme_mode_preference_usecase.dart';
-import 'package:verify/app/modules/database/external/datasource/cloud_datasource_impl/error_handler/firebase_firestore_error_handler.dart';
-import 'package:verify/app/modules/database/external/datasource/cloud_datasource_impl/cloud_api_credentials_datasource_impl.dart';
+import 'package:verify/app/modules/database/external/datasource/supabase/error_handler/supabase_database_error_handler.dart';
+import 'package:verify/app/modules/database/external/datasource/supabase/supabase_api_credentials_datasource_impl.dart';
 import 'package:verify/app/modules/database/external/datasource/local_datasource_impl/user_preferences_datasource_impl.dart';
 import 'package:verify/app/modules/database/infra/datasource/cloud_api_credentials_datasource.dart';
 import 'package:verify/app/modules/database/infra/datasource/local_api_credentials_datasource.dart';
@@ -73,6 +85,7 @@ import 'package:verify/app/shared/services/client_service/client_service.dart';
 import 'package:verify/app/shared/services/client_service/dio_client_service.dart';
 import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/error_handler/sicoob_pix_api_error_handler.dart';
 import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/sicoob_pix_api_service.dart';
+import 'package:verify/app/splash_screen_widget.dart';
 
 class AppModule extends Module {
   final SharedPreferences sharedPreferences;
@@ -80,17 +93,21 @@ class AppModule extends Module {
   AppModule(this.sharedPreferences);
   @override
   void binds(Injector i) {
-    i.addInstance<TimelineStore>(TimelineStore());
-    i.addSingleton<TimelineController>(TimelineController.new);
+    /// External Clients
+    i.addInstance<SupabaseClient>(Supabase.instance.client);
+    i.addInstance<ClientService>(DioClientService());
+    i.addInstance<SharedPreferences>(sharedPreferences);
 
     ///Error Registers
-    i.addInstance<ClientService>(DioClientService());
     i.add<SendLogsToWeb>(SendLogsToDiscordChannel.new);
     i.add<RegisterLog>(RegisterLogImpl.new);
 
     /// Global Stores
-    i.addInstance<AppStore>(AppStore());
     i.addInstance<AuthStore>(AuthStore());
+    i.addInstance<RemoteConfigStore>(
+        RemoteConfigStore(i.get<SupabaseClient>()));
+    i.addInstance<AppStore>(
+        AppStore(i.get<AuthStore>(), i.get<RemoteConfigStore>()));
     i.addInstance<ApiCredentialsStore>(ApiCredentialsStore());
     i.add<AdMobStore>(AdMobStore.new);
 
@@ -109,56 +126,55 @@ class AppModule extends Module {
 
     /// Auth
     // External
-    i.addInstance<FirebaseAuth>(FirebaseAuth.instance);
-    i.addInstance<GoogleSignIn>(GoogleSignIn());
+    // i.addInstance<GoogleSignIn>(GoogleSignIn());
     //Utils
     i.add<DataCrypto>(DataCryptoImpl.new);
     //DataSource
-    i.addSingleton<AuthDataSource>(FirebaseDataSourceImpl.new);
+    i.addSingleton<ProfileDataSource>(SupabaseProfileDataSourceImpl.new);
+    i.addSingleton<AuthDataSource>(SupabaseAuthDataSourceImpl.new);
     //Repository
     i.addSingleton<AuthRepository>(AuthRepositoryImpl.new);
     //Use Cases
     i.add<LoginWithEmailUseCase>(LoginWithEmailUseCaseImpl.new);
     i.add<LoginWithGoogleUseCase>(LoginWithGoogleImpl.new);
     i.add<GetLoggedUserUseCase>(GetLoggedUserUseCaseImpl.new);
-    i.add<RemoveUserThemeModePreferencesUseCase>(
-      RemoveUserThemeModePreferencesUseCaseImpl.new,
+    i.add<RemoveUserThemeModePreferenceUseCase>(
+      RemoveUserThemeModePreferenceUseCaseImpl.new,
     );
     i.add<RegisterWithEmailUseCase>(
       RegisterWithEmailUseCaseImpl.new,
     );
     i.add<LogoutUseCase>(LogoutUseCaseImpl.new);
     i.add<RecoverAccountUseCase>(RecoverAccountUseCaseImpl.new);
+    i.add<TenantUseCases>(TenantUseCasesImpl.new);
     //Error Handler
-    i.add<FirebaseAuthErrorHandler>(
-      FirebaseAuthErrorHandler.new,
+    i.add<SupabaseAuthErrorHandler>(
+      SupabaseAuthErrorHandler.new,
     );
 
     ///Database
-    i.add<FirebaseFirestoreErrorHandler>(
-      FirebaseFirestoreErrorHandler.new,
+    i.add<SupabaseDatabaseErrorHandler>(
+      SupabaseDatabaseErrorHandler.new,
     );
     //Datasources
-    i.addInstance<FirebaseFirestore>(FirebaseFirestore.instance);
     i.add<CloudApiCredentialsDataSource>(
-      CloudApiCredentialsDataSourceImpl.new,
+      SupabaseApiCredentialsDataSourceImpl.new,
     );
     i.addInstance<FlutterSecureStorage>(const FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      aOptions: AndroidOptions(),
     ));
     i.add<LocalApiCredentialsDataSource>(
       LocalApiCredentialsDataSourceImpl.new,
     );
-    i.addInstance<SharedPreferences>(sharedPreferences);
     i.add<UserPreferencesDataSource>(
       UserPreferencesLocalDataSourceImpl.new,
     );
     // Use Cases
-    i.add<SaveUserThemeModePreferencesUseCase>(
-      SaveUserThemeModePreferencesUseCaseImpl.new,
+    i.add<SaveUserThemeModePreferenceUseCase>(
+      SaveUserThemeModePreferenceUseCaseImpl.new,
     );
-    i.add<ReadUserThemeModePreferencesUseCase>(
-      ReadUserThemeModePreferencesUseCaseImpl.new,
+    i.add<ReadUserThemeModePreferenceUseCase>(
+      ReadUserThemeModePreferenceUseCaseImpl.new,
     );
 
     i.add<SaveSicoobApiCredentialsUseCase>(
@@ -203,6 +219,8 @@ class AppModule extends Module {
     i.add<RecoverAccountPageController>(
       RecoverAccountPageController.new,
     );
+    i.addInstance<OnboardingStore>(OnboardingStore());
+    i.add<OnboardingController>(OnboardingController.new);
     i.addSingleton<SettingsPageController>(SettingsPageController.new);
     i.addSingleton<SicoobSettingsPageController>(
       SicoobSettingsPageController.new,
@@ -216,58 +234,90 @@ class AppModule extends Module {
     i.addSingleton<BBSettingsStore>(
       BBSettingsStore.new,
     );
+    i.addInstance<MemberManagementStore>(MemberManagementStore());
+    i.add<MemberManagementController>(MemberManagementController.new);
+    i.addInstance<TimelineStore>(TimelineStore());
+    i.add<TimelineController>(TimelineController.new);
     super.binds(i);
   }
 
   @override
   void routes(RouteManager r) {
     r.child(
-      '/settings/',
+      '/',
+      child: (_) => const SplashScreen(),
+    );
+    r.child(
+      '/settings',
       child: (_) => const SettingsPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/settings/bb-settings/',
+      '/settings/bb-settings',
       child: (_) => const BBSettingsPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/settings/sicoob-settings/',
+      '/settings/sicoob-settings',
       child: (_) => const SicoobSettingsPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/auth/login/',
+      '/auth/login',
       child: (_) => const LoginPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/auth/register/',
+      '/auth/register',
       child: (_) => const RegisterPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/auth/recover/',
+      '/auth/recover',
       child: (_) => const RecoverAccountPage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/home/',
+      '/home',
       child: (_) => const HomePage(),
       transition: TransitionType.fadeIn,
       duration: const Duration(milliseconds: 300),
     );
     r.child(
-      '/timeline/',
+      '/auth/onboarding',
+      child: (_) => const OnboardingPage(),
+      transition: TransitionType.fadeIn,
+    );
+    r.child(
+      '/auth/waiting-approval',
+      child: (_) => const WaitingApprovalPage(),
+      transition: TransitionType.fadeIn,
+    );
+    r.child(
+      '/settings/management',
+      child: (_) => const MemberManagementPage(),
+      transition: TransitionType.fadeIn,
+    );
+    r.child(
+      '/timeline',
       child: (_) => const TimelinePage(),
       transition: TransitionType.fadeIn,
-      duration: const Duration(milliseconds: 300),
+    );
+    r.child(
+      '/maintenance',
+      child: (_) => const MaintenancePage(),
+      transition: TransitionType.noTransition,
+    );
+    r.child(
+      '/update',
+      child: (_) => const UpdatePage(),
+      transition: TransitionType.noTransition,
     );
     super.routes(r);
   }

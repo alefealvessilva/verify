@@ -3,7 +3,7 @@ import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
 
 abstract class LogoutUseCase {
-  Future<Result<void, AuthError>> call();
+  Future<ResultDart<Unit, AuthError>> call();
 }
 
 class LogoutUseCaseImpl implements LogoutUseCase {
@@ -11,7 +11,7 @@ class LogoutUseCaseImpl implements LogoutUseCase {
 
   LogoutUseCaseImpl(this._authRepository);
   @override
-  Future<Result<void, AuthError>> call() async {
+  Future<ResultDart<Unit, AuthError>> call() async {
     return await _authRepository.logout();
   }
 }

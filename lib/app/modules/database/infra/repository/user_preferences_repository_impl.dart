@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/user_preferences_error.dart';
@@ -12,14 +10,14 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   UserPreferencesRepositoryImpl(this._userPreferencesDataSource);
 
   @override
-  Future<Result<void, UserPreferencesError>> saveUserThemePreference({
+  Future<ResultDart<Unit, UserPreferencesError>> saveUserThemePreference({
     required ThemeMode themeMode,
   }) async {
     try {
       await _userPreferencesDataSource.saveUserThemePreference(
         themeMode: themeMode,
       );
-      return const Success(Void);
+      return Success(unit);
     } on ErrorSavingUserThemePreference catch (e) {
       return Failure(e);
     } catch (e) {
@@ -31,7 +29,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   }
 
   @override
-  Future<Result<ThemeMode, UserPreferencesError>>
+  Future<ResultDart<ThemeMode, UserPreferencesError>>
       readUserThemePreference() async {
     try {
       final userThemeMode =
@@ -48,14 +46,14 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   }
 
   @override
-  Future<Result<void, UserPreferencesError>> updateUserThemePreference({
+  Future<ResultDart<Unit, UserPreferencesError>> updateUserThemePreference({
     required ThemeMode themeMode,
   }) async {
     try {
       await _userPreferencesDataSource.updateUserThemePreference(
         themeMode: themeMode,
       );
-      return const Success(Void);
+      return Success(unit);
     } on ErrorUpdateUserThemePreference catch (e) {
       return Failure(e);
     } catch (e) {
@@ -67,10 +65,10 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   }
 
   @override
-  Future<Result<void, UserPreferencesError>> deleteUserThemePreference() async {
+  Future<ResultDart<Unit, UserPreferencesError>> deleteUserThemePreference() async {
     try {
       await _userPreferencesDataSource.deleteUserThemePreference();
-      return const Success(Void);
+      return Success(unit);
     } on ErrorDeletingUserThemePreference catch (e) {
       return Failure(e);
     } catch (e) {

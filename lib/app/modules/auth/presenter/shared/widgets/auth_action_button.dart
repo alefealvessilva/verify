@@ -22,7 +22,7 @@ class AuthActionButton extends StatelessWidget {
     return FilledButton(
       style: ButtonStyle(
           backgroundColor: color != null
-              ? MaterialStateColor.resolveWith((states) => color!)
+              ? WidgetStateColor.resolveWith((states) => color!)
               : null),
       onPressed: enabled ? onPressed : null,
       child: isLoading

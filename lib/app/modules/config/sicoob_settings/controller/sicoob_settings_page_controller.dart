@@ -87,10 +87,10 @@ class SicoobSettingsPageController {
 
     if (result != null) {
       final file = File(result.files.single.path!);
-      final certBase64String = PixSicoob.certFileToBase64String(
+      final certBase64StringResult = PixSicoob.certFileToBase64String(
         pkcs12CertificateFile: file,
       );
-      certificateString = certBase64String;
+      certificateString = certBase64StringResult.getOrThrow();
       final fileName = file.path.split('/').last;
       _store.setCertificateFileName(fileName);
     }
@@ -151,9 +151,13 @@ class SicoobSettingsPageController {
     if (user == null) {
       return 'Sua sessão expirou.\nPor favor, faça login novamente.';
     } else {
+      final targetId = (database == Database.cloud && user.tenantId != null) 
+          ? user.tenantId! 
+          : user.id;
+
       final saved = await _saveSicoobApiCredentialsUseCase(
         database: database,
-        id: user.id,
+        id: targetId,
         sicoobApiCredentialsEntity: SicoobApiCredentialsEntity(
           clientID: clientIDController.text,
           certificatePassword: certificatePasswordController.text,
@@ -161,11 +165,10 @@ class SicoobSettingsPageController {
           isFavorite: false,
         ),
       );
-      saved.fold(
+      return saved.fold(
         (success) => null,
         (failure) => failure.message,
       );
-      return null;
     }
   }
 
@@ -202,15 +205,18 @@ class SicoobSettingsPageController {
     if (user == null) {
       return 'Sua sessão expirou.\nPor favor, faça login novamente.';
     } else {
+      final targetId = (database == Database.cloud && user.tenantId != null) 
+          ? user.tenantId! 
+          : user.id;
+
       final removed = await _removeSicoobApiCredentialsUseCase(
         database: database,
-        id: user.id,
+        id: targetId,
       );
-      removed.fold(
+      return removed.fold(
         (success) => null,
         (failure) => failure.message,
       );
-      return null;
     }
   }
 

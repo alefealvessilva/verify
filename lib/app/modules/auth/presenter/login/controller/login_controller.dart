@@ -47,12 +47,12 @@ class LoginController {
 
   void goToRegisterPage() {
     dispose();
-    Modular.to.pushReplacementNamed('/auth/register/');
+    Modular.to.pushReplacementNamed('/auth/register');
   }
 
   void goToRecoverAccountPage() {
     dispose();
-    Modular.to.pushReplacementNamed('/auth/recover/');
+    Modular.to.pushReplacementNamed('/auth/recover');
   }
 
   Future<String?> loginWithEmail() async {
@@ -72,10 +72,18 @@ class LoginController {
           _loginStore.loggingInWithEmailInProgress(false);
           return 'Confirme seu email no link enviado';
         }
-        authStore.setUser(user);
-        await _fetchCloudApiCredentials(user);
+        
+        // Recarrega todos os dados (inclusive o Tenant/Grupo)
+        await authStore.loadData();
+        
+        final updatedUser = authStore.loggedUser ?? user;
+        await _fetchCloudApiCredentials(updatedUser);
+        
         _loginStore.loggingInWithEmailInProgress(false);
-        Modular.to.pushReplacementNamed('/home/');
+        
+        // A navegação ocorrerá automaticamente pelo AppWidget reagindo a mudança logada
+        debugPrint('LoginController: Login process finished for user ${updatedUser.id}');
+
         return null;
       },
       (failure) {
@@ -93,10 +101,16 @@ class LoginController {
 
     return result.fold(
       (user) async {
-        authStore.setUser(user);
-        await _fetchCloudApiCredentials(user);
+        // Recarrega todos os dados (inclusive o Tenant/Grupo)
+        await authStore.loadData();
+        
+        final updatedUser = authStore.loggedUser ?? user;
+        await _fetchCloudApiCredentials(updatedUser);
+        
         _loginStore.loggingInWithGoogleInProgress(false);
-        Modular.to.pushReplacementNamed('/home/');
+        
+        // A navegação ocorrerá automaticamente pelo AppWidget reagindo a mudança logada
+
         return null;
       },
       (failure) {
@@ -131,13 +145,19 @@ class LoginController {
   }
 
   Future<void> _fetchCloudApiCredentials(LoggedUserInfoEntity user) async {
+    // Só tenta buscar credenciais se o usuário já estiver vinculado a um grupo (tenant)
+    if (user.tenantId == null || user.tenantId!.isEmpty) {
+      debugPrint('LoginController: Skipping cloud fetch, user has no tenantId');
+      return;
+    }
+
     final cloudBBCredentials = await _readBBApiCredentialsUseCase(
-      id: user.id,
+      id: user.tenantId!,
       database: Database.cloud,
     ).getOrNull();
 
     final cloudSicoobCredentials = await _readSicoobApiCredentialsUseCase(
-      id: user.id,
+      id: user.tenantId!,
       database: Database.cloud,
     ).getOrNull();
     if (cloudBBCredentials != null) {

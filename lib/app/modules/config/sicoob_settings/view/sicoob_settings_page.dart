@@ -138,20 +138,18 @@ class _SicoobSettingsPageState extends State<SicoobSettingsPage> {
                         padding: const EdgeInsets.all(8),
                         child: Row(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Visibility(
-                                  visible: store.certificateFileName.isEmpty,
-                                  child: Text(
-                                    'Enviar certificado',
-                                    style: textTheme.bodyMedium,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Visibility(
+                                    visible: store.certificateFileName.isEmpty,
+                                    child: Text(
+                                      'Enviar certificado',
+                                      style: textTheme.bodyMedium,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: Text(
+                                  Text(
                                     store.certificateFileName.isEmpty
                                         ? 'Selecione um certificado'
                                         : store.certificateFileName,
@@ -160,11 +158,12 @@ class _SicoobSettingsPageState extends State<SicoobSettingsPage> {
                                       fontSize: 16,
                                     ),
                                     maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                            const Spacer(),
+                            const SizedBox(width: 16),
                             const Icon(Icons.attach_file),
                           ],
                         ),

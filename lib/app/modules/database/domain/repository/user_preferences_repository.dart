@@ -4,12 +4,12 @@ import 'package:verify/app/modules/database/domain/errors/user_preferences_error
 
 abstract class UserPreferencesRepository {
   // User Preferences
-  Future<Result<void, UserPreferencesError>> saveUserThemePreference({
+  Future<ResultDart<Unit, UserPreferencesError>> saveUserThemePreference({
     required ThemeMode themeMode,
   });
-  Future<Result<void, UserPreferencesError>> updateUserThemePreference({
+  Future<ResultDart<Unit, UserPreferencesError>> updateUserThemePreference({
     required ThemeMode themeMode,
   });
-  Future<Result<ThemeMode, UserPreferencesError>> readUserThemePreference();
-  Future<Result<void, UserPreferencesError>> deleteUserThemePreference();
+  Future<ResultDart<ThemeMode, UserPreferencesError>> readUserThemePreference();
+  Future<ResultDart<Unit, UserPreferencesError>> deleteUserThemePreference();
 }

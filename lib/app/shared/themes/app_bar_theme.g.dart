@@ -3,21 +3,32 @@ part of 'theme.dart';
 AppBarTheme get _lightAppBarTheme => AppBarTheme(
       scrolledUnderElevation: 0,
       elevation: 0,
-      surfaceTintColor: _lightColorScheme.onInverseSurface,
-      foregroundColor: _lightColorScheme.primary,
+      surfaceTintColor: Colors.transparent,
+      foregroundColor: _lightColorScheme.onSurface,
       centerTitle: true,
-      backgroundColor: _lightColorScheme.onInverseSurface,
+      backgroundColor: _lightColorScheme.surface,
+      titleTextStyle: TextStyle(
+        color: _lightColorScheme.onSurface,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
       iconTheme: IconThemeData(
         color: _lightColorScheme.primary,
       ),
     );
+
 AppBarTheme get _darkAppBarTheme => AppBarTheme(
       scrolledUnderElevation: 0,
       elevation: 0,
-      surfaceTintColor: _darkColorScheme.onInverseSurface,
-      foregroundColor: _darkColorScheme.primary,
+      surfaceTintColor: Colors.transparent,
+      foregroundColor: _darkColorScheme.onSurface,
       centerTitle: true,
-      backgroundColor: _darkColorScheme.onInverseSurface,
+      backgroundColor: _darkColorScheme.surface,
+      titleTextStyle: TextStyle(
+        color: _darkColorScheme.onSurface,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
       iconTheme: IconThemeData(
         color: _darkColorScheme.primary,
       ),

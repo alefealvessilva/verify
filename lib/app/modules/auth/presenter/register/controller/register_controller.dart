@@ -29,27 +29,29 @@ class RegisterController {
   }
 
   Future<String?> registerWithEmail() async {
-    emailFocus.unfocus();
-    passwordFocus.unfocus();
-    confirmPasswordFocus.unfocus();
-    _registerStore.registeringWithEmailInProgress(true);
-    final registerCredentials = RegisterCredentialsEntity(
-      email: emailController.text,
-      password: passwordController.text,
-      confirmPassword: confirmPasswordController.text,
-    );
-    final result = await _registerWithEmailUseCase(registerCredentials);
+    try {
+      emailFocus.unfocus();
+      passwordFocus.unfocus();
+      confirmPasswordFocus.unfocus();
+      _registerStore.registeringWithEmailInProgress(true);
+      final registerCredentials = RegisterCredentialsEntity(
+        email: emailController.text,
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+      );
+      final result = await _registerWithEmailUseCase(registerCredentials);
 
-    return result.fold(
-      (user) {
-        _registerStore.registeringWithEmailInProgress(false);
-        return null;
-      },
-      (failure) {
-        _registerStore.registeringWithEmailInProgress(false);
-        return failure.message;
-      },
-    );
+      return result.fold(
+        (user) {
+          return null;
+        },
+        (failure) {
+          return failure.message;
+        },
+      );
+    } finally {
+      _registerStore.registeringWithEmailInProgress(false);
+    }
   }
 
   void validateFields() {

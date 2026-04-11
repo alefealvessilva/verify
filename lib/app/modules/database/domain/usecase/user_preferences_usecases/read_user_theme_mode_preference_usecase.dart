@@ -3,17 +3,17 @@ import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/user_preferences_error.dart';
 import 'package:verify/app/modules/database/domain/repository/user_preferences_repository.dart';
 
-abstract class ReadUserThemeModePreferencesUseCase {
-  Future<Result<ThemeMode, UserPreferencesError>> call();
+abstract class ReadUserThemeModePreferenceUseCase {
+  Future<ResultDart<ThemeMode, UserPreferencesError>> call();
 }
 
-class ReadUserThemeModePreferencesUseCaseImpl
-    implements ReadUserThemeModePreferencesUseCase {
+class ReadUserThemeModePreferenceUseCaseImpl
+    implements ReadUserThemeModePreferenceUseCase {
   final UserPreferencesRepository _userPreferencesRepository;
 
-  ReadUserThemeModePreferencesUseCaseImpl(this._userPreferencesRepository);
+  ReadUserThemeModePreferenceUseCaseImpl(this._userPreferencesRepository);
   @override
-  Future<Result<ThemeMode, UserPreferencesError>> call() async {
+  Future<ResultDart<ThemeMode, UserPreferencesError>> call() async {
     return await _userPreferencesRepository.readUserThemePreference();
   }
 }

@@ -10,7 +10,7 @@ part 'navigation_bar_theme.g.dart';
 
 ThemeData get lightTheme => ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: _lightColorScheme.background,
+      scaffoldBackgroundColor: _lightColorScheme.surface,
       radioTheme: _lightRadioTheme,
       colorScheme: _lightColorScheme,
       iconButtonTheme: _lightIconButtonTheme,
@@ -23,7 +23,7 @@ ThemeData get lightTheme => ThemeData(
 
 ThemeData get darkTheme => ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: _darkColorScheme.background,
+      scaffoldBackgroundColor: _darkColorScheme.surface,
       radioTheme: _darkRadioTheme,
       colorScheme: _darkColorScheme,
       iconTheme: _darkIconThemeData,

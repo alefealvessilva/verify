@@ -128,20 +128,24 @@ class BBSettingsPageController {
     if (user == null) {
       return 'Sua sessão expirou.\nPor favor, faça login novamente.';
     } else {
+      // Prioriza tenantId para Multi-tenant cloud, senão usa userId
+      final targetId = (database == Database.cloud && user.tenantId != null) 
+          ? user.tenantId! 
+          : user.id;
+
       final saved = await _saveBBApiCredentialsUseCase(
         database: database,
-        id: user.id,
+        id: targetId,
         bbApiCredentialsEntity: BBApiCredentialsEntity(
           applicationDeveloperKey: appDevKeyController.text,
           basicKey: basicKeyController.text,
           isFavorite: false,
         ),
       );
-      saved.fold(
+      return saved.fold(
         (success) => null,
         (failure) => failure.message,
       );
-      return null;
     }
   }
 
@@ -178,15 +182,18 @@ class BBSettingsPageController {
     if (user == null) {
       return 'Sua sessão expirou.\nPor favor, faça login novamente.';
     } else {
+      final targetId = (database == Database.cloud && user.tenantId != null) 
+          ? user.tenantId! 
+          : user.id;
+
       final saved = await _removeBBApiCredentialsUseCase(
         database: database,
-        id: user.id,
+        id: targetId,
       );
-      saved.fold(
+      return saved.fold(
         (success) => null,
         (failure) => failure.message,
       );
-      return null;
     }
   }
 

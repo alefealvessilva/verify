@@ -5,7 +5,7 @@ import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
 
 abstract class RegisterWithEmailUseCase {
-  Future<Result<LoggedUserInfoEntity, AuthError>> call(
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> call(
     RegisterCredentialsEntity registerCredentialsEntity,
   );
 }
@@ -15,7 +15,7 @@ class RegisterWithEmailUseCaseImpl implements RegisterWithEmailUseCase {
   RegisterWithEmailUseCaseImpl(this._authRepository);
 
   @override
-  Future<Result<LoggedUserInfoEntity, AuthError>> call(
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> call(
     RegisterCredentialsEntity registerCredentialsEntity,
   ) async {
     if (!registerCredentialsEntity.isValidEmail) {

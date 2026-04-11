@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:verify/app/modules/auth/presenter/login/controller/login_controller.dart';
 import 'package:verify/app/modules/auth/presenter/login/store/login_store.dart';
-import 'package:verify/app/modules/auth/presenter/shared/widgets/auth_action_button.dart';
-import 'package:verify/app/modules/auth/presenter/shared/widgets/auth_field_widget.dart';
-import 'package:verify/app/modules/auth/presenter/shared/widgets/auth_header_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:verify/app/modules/auth/presenter/shared/widgets/google_sign_in_button_widget.dart';
 import 'package:verify/app/shared/widgets/custom_snack_bar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,131 +17,175 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final controller = Modular.get<LoginController>();
   final store = Modular.get<LoginStore>();
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          body: Semantics(
-            label: 'Tela de login',
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: constraints.maxHeight,
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 64),
+              // Logo e Boas-vindas
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.security_rounded,
+                    size: 48,
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Bem-vindo ao Verify',
+                textAlign: TextAlign.center,
+                style: textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Transparência nos seus recebimentos Pix',
+                textAlign: TextAlign.center,
+                style: textTheme.bodyLarge?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 64),
+              // Formulário
+              Form(
+                key: controller.formKey,
+                onChanged: controller.validateFields,
                 child: Column(
                   children: [
-                    const AuthHeaderWidget(),
-                    Flexible(
-                      flex: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 25, 40, 39),
-                        child: Form(
-                          autovalidateMode: AutovalidateMode.always,
-                          key: controller.formKey,
-                          onChanged: controller.validateFields,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Semantics(
-                                    label: 'Campo de email',
-                                    child: AuthFieldWidget(
-                                      labelText: 'Email',
-                                      keyboardType: TextInputType.emailAddress,
-                                      validator: controller.autoValidateEmail,
-                                      controller: controller.emailController,
-                                      focusNode: controller.emailFocus,
-                                      onEditingComplete:
-                                          controller.passwordFocus.requestFocus,
-                                    ),
+                    TextFormField(
+                      controller: controller.emailController,
+                      focusNode: controller.emailFocus,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: controller.autoValidateEmail,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.email_outlined),
+                      ),
+                      onEditingComplete: controller.passwordFocus.requestFocus,
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: controller.passwordController,
+                      focusNode: controller.passwordFocus,
+                      obscureText: true,
+                      validator: controller.autoValidatePassword,
+                      decoration: const InputDecoration(
+                        labelText: 'Senha',
+                        prefixIcon: Icon(Icons.lock_outline_rounded),
+                      ),
+                      onEditingComplete: controller.passwordFocus.unfocus,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: controller.goToRecoverAccountPage,
+                        child: const Text('Esqueceu a senha?'),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Observer(
+                      builder: (_) => SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: FilledButton(
+                          onPressed:
+                              store.loginButtonEnabled ? _loginWithEmail : null,
+                          child: store.loggingInWithEmail
+                              ? const SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
                                   ),
-                                  const SizedBox(height: 24),
-                                  Semantics(
-                                    label: 'Campo de senha',
-                                    child: AuthFieldWidget(
-                                      labelText: 'Senha',
-                                      isSecret: true,
-                                      validator:
-                                          controller.autoValidatePassword,
-                                      controller: controller.passwordController,
-                                      focusNode: controller.passwordFocus,
-                                      onEditingComplete:
-                                          controller.passwordFocus.unfocus,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 24),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Semantics(
-                                        label: 'Botão para recuperar a senha',
-                                        child: TextButton(
-                                          onPressed:
-                                              controller.goToRecoverAccountPage,
-                                          child:
-                                              const Text('Esqueceu a senha?'),
-                                        ),
-                                      ),
-                                      Semantics(
-                                        label: 'Botão de login',
-                                        child: Observer(
-                                          builder: (context) {
-                                            return AuthActionButton(
-                                              title: 'Login',
-                                              enabled: store.loginButtonEnabled,
-                                              onPressed: _loginWithEmail,
-                                              isLoading:
-                                                  store.loggingInWithEmail,
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Visibility(
-                                visible: Platform.isAndroid,
-                                child: Observer(
-                                  builder: (context) {
-                                    return Semantics(
-                                      label: 'Botão para entrar com o Google',
-                                      child: GoogleSignInButton(
-                                        onTap: _loginWithGoogle,
-                                        isLoading: store.loggingInWithGoogle,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Semantics(
-                                label: 'Botão de cadastro',
-                                child: TextButton.icon(
-                                  onPressed: controller.goToRegisterPage,
-                                  icon: const Icon(
-                                      Icons.app_registration_rounded),
-                                  label: const Text('Cadastre-se'),
-                                ),
-                              ),
-                            ],
-                          ),
+                                )
+                              : const Text('Entrar'),
                         ),
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 24),
+                    if (Platform.isAndroid) ...[
+                      const Row(
+                        children: [
+                          Expanded(child: Divider()),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text('OU'),
+                          ),
+                          Expanded(child: Divider()),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Observer(
+                        builder: (_) => OutlinedButton.icon(
+                          onPressed: store.loggingInWithGoogle
+                              ? null
+                              : _loginWithGoogle,
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 56),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          icon: store.loggingInWithGoogle
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
+                                )
+                              : const Icon(Icons.g_mobiledata_rounded,
+                                  size: 32),
+                          label: const Text('Continuar com o Google'),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
-            ),
+              const SizedBox(height: 48),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Não tem uma conta?'),
+                  TextButton(
+                    onPressed: controller.goToRegisterPage,
+                    child: const Text('Cadastre-se'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
   Future<void> _loginWithEmail() async {
     await controller.loginWithEmail().then((errorMessage) {
       if (errorMessage != null) {
+        if (!mounted) return;
         var snackBarType = SnackBarType.error;
         ScaffoldMessenger.of(context).clearSnackBars();
         if (errorMessage.contains('Confirme seu email no link enviado')) {
@@ -165,6 +205,7 @@ class _LoginPageState extends State<LoginPage> {
     ScaffoldMessenger.of(context).clearSnackBars();
     await controller.loginWithGoogle().then((errorMessage) {
       if (errorMessage != null) {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           CustomSnackBar(

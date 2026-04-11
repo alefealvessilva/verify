@@ -1,16 +1,27 @@
 part of 'theme.dart';
 
 FilledButtonThemeData get _lightFilledButtonThemeData => FilledButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: MaterialStateProperty.resolveWith<Size>(
-          (states) => const Size(131, 40),
+      style: FilledButton.styleFrom(
+        minimumSize: const Size(131, 48),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
         ),
       ),
     );
+
 FilledButtonThemeData get _darkFilledButtonThemeData => FilledButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: MaterialStateProperty.resolveWith<Size>(
-          (states) => const Size(131, 40),
+      style: FilledButton.styleFrom(
+        minimumSize: const Size(131, 48),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
         ),
       ),
     );

@@ -38,7 +38,7 @@ class FoundTransactionsCountWidget extends StatelessWidget {
             child: Text(
               length.toString(),
               style: textTheme.titleSmall!.copyWith(
-                color: colorScheme.background,
+                color: colorScheme.surface,
               ),
             ),
           ),

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:verify/app/modules/auth/domain/usecase/get_logged_user_usecase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:verify/app/shared/error_registrator/discord_webhook_url.dart';
 import 'package:verify/app/shared/services/client_service/client_service.dart';
 
@@ -15,13 +14,13 @@ class SendLogsToDiscordChannel implements SendLogsToWeb {
   );
   @override
   Future<void> call(Object e) async {
-    final getLoggedUser = Modular.get<GetLoggedUserUseCase>();
-    final user = await getLoggedUser();
-    final userId = user?.id;
+    // Não usamos mais o UseCase aqui para evitar a recursão infinita (Auth -> Log -> Auth)
+    final userId = Supabase.instance.client.auth.currentUser?.id ?? 'Deslogado';
 
-    await _clientService.post(
+    // Envio "Fire and Forget" para não travar o fluxo principal
+    _clientService.post(
       url: discordWebookUrl,
       body: {'content': '```diff\n+ UserID: $userId\n- Error: $e \n```'},
-    );
+    ).timeout(const Duration(seconds: 2), onTimeout: () => null);
   }
 }

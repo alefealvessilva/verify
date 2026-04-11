@@ -5,7 +5,7 @@ import 'package:verify/app/modules/database/domain/repository/api_credentials_re
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 abstract class SaveSicoobApiCredentialsUseCase {
-  Future<Result<void, ApiCredentialsError>> call({
+  Future<ResultDart<Unit, ApiCredentialsError>> call({
     required Database database,
     required String id,
     required SicoobApiCredentialsEntity sicoobApiCredentialsEntity,
@@ -18,7 +18,7 @@ class SaveSicoobApiCredentialsUseCaseImpl
   SaveSicoobApiCredentialsUseCaseImpl(this._apiCredentialsRepository);
 
   @override
-  Future<Result<void, ApiCredentialsError>> call({
+  Future<ResultDart<Unit, ApiCredentialsError>> call({
     required Database database,
     required String id,
     required SicoobApiCredentialsEntity sicoobApiCredentialsEntity,

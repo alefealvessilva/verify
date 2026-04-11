@@ -3,20 +3,20 @@ import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 
 abstract class AuthRepository {
-  Future<Result<LoggedUserInfoEntity, AuthError>> registerWithEmail({
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> registerWithEmail({
     required String email,
     required String password,
   });
 
-  Future<Result<LoggedUserInfoEntity, AuthError>> loginWithEmail({
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> loginWithEmail({
     required String email,
     required String password,
   });
 
-  Future<Result<LoggedUserInfoEntity, AuthError>> loginWithGoogle();
-  Future<Result<void, AuthError>> logout();
+  Future<ResultDart<LoggedUserInfoEntity, AuthError>> loginWithGoogle();
+  Future<ResultDart<Unit, AuthError>> logout();
   Future<LoggedUserInfoEntity?> loggedUser();
-  Future<Result<void, AuthError>> sendRecoverInstructions({
+  Future<ResultDart<Unit, AuthError>> sendRecoverInstructions({
     required String email,
   });
 }

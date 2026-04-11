@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/read_user_theme_mode_preference_usecase.dart';
+import 'package:verify/app/core/auth_store.dart';
+import 'package:verify/app/core/remote_config_store.dart';
 
 part 'app_store.g.dart';
 
 class AppStore = AppStoreBase with _$AppStore;
 
 abstract class AppStoreBase with Store {
+  final AuthStore _authStore;
+  final RemoteConfigStore _remoteConfigStore;
+
+  AppStoreBase(this._authStore, this._remoteConfigStore);
+
   @observable
   bool loading = false;
 
@@ -16,6 +24,39 @@ abstract class AppStoreBase with Store {
 
   @observable
   var currentDestination = Observable<int>(0);
+
+  @computed
+  String get idealRoute {
+    final isMaint = _remoteConfigStore.isMaintenance;
+    final needsUpd = _remoteConfigStore.needsUpdate;
+    final user = _authStore.loggedUser;
+
+    final route = _calculateIdealRoute(isMaint, needsUpd, user);
+    debugPrint(
+        'AppStore: IdealRoute calculated: $route (User: ${user?.id}, Status: ${user?.status}, Role: ${user?.role})');
+    return route;
+  }
+
+  String _calculateIdealRoute(
+      bool isMaint, bool needsUpd, LoggedUserInfoEntity? user) {
+    if (isMaint) return '/maintenance';
+    if (needsUpd) return '/update';
+    if (user == null) return '/auth/login';
+
+    if (user.role == 'none' || user.tenantId == null || user.role.isEmpty) {
+      return '/auth/onboarding';
+    }
+
+    if (user.status == 'pending') {
+      return '/auth/waiting-approval';
+    }
+
+    if (user.status == 'approved') {
+      return '/home';
+    }
+
+    return '/auth/login';
+  }
 
   @action
   void setPreferredTheme(ThemeMode theme) {
@@ -30,7 +71,7 @@ abstract class AppStoreBase with Store {
   Future<void> loadData() async {
     loading = true;
     final readUserThemePreference =
-        Modular.get<ReadUserThemeModePreferencesUseCase>();
+        Modular.get<ReadUserThemeModePreferenceUseCase>();
     final mode = await readUserThemePreference();
     final themeResult = mode.getOrNull();
     if (themeResult != null) {
