@@ -1,7 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:verify/app/shared/extensions/date_time.dart';
+
 
 class PixTransactionTileWidget extends StatelessWidget {
   final String clientName;
@@ -89,8 +89,7 @@ class PixTransactionTileWidget extends StatelessWidget {
   }
 
   String _formattedDateTime() {
-    final dateTime = date.toBrazilianTimeZone();
-    final formattedDate = DateFormat('HH:mm').format(dateTime);
+    final formattedDate = DateFormat('HH:mm').format(date);
     return formattedDate;
   }
 }

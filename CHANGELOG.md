@@ -1,3 +1,9 @@
+## [1.2.3+11] - 12-04-2026
+
+### Corrigido
+- Erro crítico de fuso horário nas transações (exibição de 10:05/04:05 em vez de 07:05).
+- Erro de busca de transações no Banco do Brasil (erro 4769515) ajustando o cálculo do intervalo de datas.
+
 ## [1.2.2+10] - 11-04-2026
 
 ### Adicionado
