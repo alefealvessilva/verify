@@ -1,3 +1,9 @@
+## [1.2.3+13] - 14-04-2026
+
+### Alterado
+- Migração do package name de `br.com.acxtech.verify` para `br.com.asclabs.verify`.
+- Resolução de conflitos de Content Provider Authority (`androidx-startup` e `mobileadsinitprovider`) no `AndroidManifest.xml`.
+
 ## [1.2.3+11] - 12-04-2026
 
 ### Corrigido

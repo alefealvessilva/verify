@@ -1,4 +1,4 @@
-package br.com.acxtech.verify
+package br.com.asclabs.verify
 
 import io.flutter.embedding.android.FlutterActivity
 
