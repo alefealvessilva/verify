@@ -5,6 +5,8 @@
 **Desenvolvido por:** ASCLABS
 **Pacote:** br.com.asclabs.verify
 
+> **Exclusão de conta:** Para solicitar a exclusão da sua conta e de todos os dados, envie um e-mail para **alefeasc@gmail.com** com o assunto `[Verify] Exclusão de Conta`. [Veja o passo a passo completo na Seção 9](#9-exclusão-de-conta-e-dados).
+
 ---
 
 ## 1. Introdução
@@ -87,7 +89,7 @@ Podemos divulgar informações quando exigido por lei, regulamentação ou decis
 
 - **Dados locais:** permanecem no dispositivo até que o usuário desinstale o Aplicativo ou limpe os dados manualmente.
 - **Dados de autenticação (Supabase):** mantidos enquanto a conta estiver ativa.
-- Você pode solicitar a exclusão da sua conta e dados a qualquer momento pelo e-mail de contato.
+- Você pode solicitar a exclusão da sua conta e dados a qualquer momento seguindo o [passo a passo da Seção 9](#9-exclusão-de-conta-e-dados).
 
 ---
 
@@ -107,7 +109,64 @@ Para exercer qualquer um desses direitos, entre em contato pelo e-mail: **alefea
 
 ---
 
-## 9. Publicidade e Controle de Anúncios
+## 9. Exclusão de Conta e Dados
+
+Você tem o direito de solicitar a exclusão completa da sua conta e de todos os dados associados a ela, conforme previsto na **LGPD (Art. 18, VI)**. Siga o passo a passo abaixo:
+
+### Passo a Passo para Solicitar a Exclusão
+
+**1. Prepare o e-mail de solicitação**
+
+Envie um e-mail para **alefeasc@gmail.com** com as seguintes informações:
+
+| Campo | Valor |
+|---|---|
+| **Para** | alefeasc@gmail.com |
+| **Assunto** | `[Verify] Exclusão de Conta` |
+
+**2. Inclua no corpo do e-mail:**
+
+```
+Olá,
+
+Solicito a exclusão completa da minha conta e de todos os meus dados
+no aplicativo Verify (br.com.asclabs.verify).
+
+E-mail da conta: [SEU E-MAIL CADASTRADO NO APP]
+
+Confirmo que sou o titular desta conta e que desejo a exclusão
+permanente de todos os dados associados a ela.
+
+Atenciosamente,
+[SEU NOME]
+```
+
+**3. Aguarde a confirmação**
+
+- Você receberá uma resposta de confirmação em até **5 dias úteis**.
+- A exclusão será processada em até **30 dias corridos** após a confirmação.
+
+### O que será excluído
+
+| Dado | Onde está armazenado | Status após exclusão |
+|---|---|---|
+| Conta de usuário (e-mail) | Supabase (nuvem) | ✅ Excluído permanentemente |
+| Configurações da conta | Supabase (nuvem) | ✅ Excluído permanentemente |
+| Credenciais bancárias sincronizadas | Supabase (nuvem) | ✅ Excluído permanentemente |
+| Credenciais bancárias locais | Dispositivo | ⚠️ Excluídas ao desinstalar o app |
+| Preferências locais | Dispositivo | ⚠️ Excluídas ao desinstalar o app |
+
+> **Atenção:** Após a exclusão da conta, o acesso ao Aplicativo será permanentemente revogado. Esta ação é **irreversível**.
+
+### Dados que podem ser retidos
+
+Após o processamento da exclusão, alguns dados poderão ser retidos nos seguintes casos previstos em lei:
+- **Obrigações legais:** quando exigido por autoridades competentes ou legislação vigente.
+- **Dados anonimizados:** registros estatísticos sem identificação pessoal poderão ser mantidos para fins de melhoria do serviço.
+
+---
+
+## 10. Publicidade e Controle de Anúncios
 
 O Aplicativo utiliza o **Google AdMob** para exibição de anúncios. Para gerenciar suas preferências de publicidade personalizada, acesse:
 
@@ -116,19 +175,19 @@ O Aplicativo utiliza o **Google AdMob** para exibição de anúncios. Para geren
 
 ---
 
-## 10. Privacidade de Menores
+## 11. Privacidade de Menores
 
 O Verify **não é destinado a crianças** menores de 18 anos. Não coletamos intencionalmente dados pessoais de menores de idade. Se tomarmos conhecimento de tal coleta, os dados serão imediatamente excluídos.
 
 ---
 
-## 11. Alterações nesta Política
+## 12. Alterações nesta Política
 
 Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos sobre mudanças significativas por meio de uma atualização no Aplicativo. A data da última atualização estará sempre indicada no topo deste documento.
 
 ---
 
-## 12. Contato
+## 13. Contato
 
 Dúvidas, solicitações ou reclamações relacionadas à privacidade:
 

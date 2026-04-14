@@ -6,7 +6,6 @@ import 'package:verify/app/core/auth_store.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/auth/domain/entities/login_credentials_entity.dart';
 import 'package:verify/app/modules/auth/domain/usecase/login_with_email_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/login_with_google_usecase.dart';
 import 'package:verify/app/modules/auth/presenter/login/store/login_store.dart';
 import 'package:verify/app/modules/auth/utils/email_regex.dart';
 import 'package:verify/app/modules/auth/utils/password_regex.dart';
@@ -21,7 +20,6 @@ import 'package:verify/app/modules/database/utils/database_enums.dart';
 class LoginController {
   final LoginStore _loginStore;
   final LoginWithEmailUseCase _loginWithEmailUseCase;
-  final LoginWithGoogleUseCase _loginWithGoogleUseCase;
   final ReadSicoobApiCredentialsUseCase _readSicoobApiCredentialsUseCase;
   final ReadBBApiCredentialsUseCase _readBBApiCredentialsUseCase;
   final SaveSicoobApiCredentialsUseCase _saveSicoobApiCredentialsUseCase;
@@ -38,7 +36,6 @@ class LoginController {
   LoginController(
     this._loginStore,
     this._loginWithEmailUseCase,
-    this._loginWithGoogleUseCase,
     this._readSicoobApiCredentialsUseCase,
     this._readBBApiCredentialsUseCase,
     this._saveSicoobApiCredentialsUseCase,
@@ -88,33 +85,6 @@ class LoginController {
       },
       (failure) {
         _loginStore.loggingInWithEmailInProgress(false);
-        return failure.message;
-      },
-    );
-  }
-
-  Future<String?> loginWithGoogle() async {
-    emailFocus.unfocus();
-    passwordFocus.unfocus();
-    _loginStore.loggingInWithGoogleInProgress(true);
-    final result = await _loginWithGoogleUseCase.call();
-
-    return result.fold(
-      (user) async {
-        // Recarrega todos os dados (inclusive o Tenant/Grupo)
-        await authStore.loadData();
-        
-        final updatedUser = authStore.loggedUser ?? user;
-        await _fetchCloudApiCredentials(updatedUser);
-        
-        _loginStore.loggingInWithGoogleInProgress(false);
-        
-        // A navegação ocorrerá automaticamente pelo AppWidget reagindo a mudança logada
-
-        return null;
-      },
-      (failure) {
-        _loginStore.loggingInWithGoogleInProgress(false);
         return failure.message;
       },
     );
@@ -194,6 +164,5 @@ class LoginController {
     passwordController.text = '';
     _loginStore.isValidFields(false);
     _loginStore.loggingInWithEmailInProgress(false);
-    _loginStore.loggingInWithGoogleInProgress(false);
   }
 }

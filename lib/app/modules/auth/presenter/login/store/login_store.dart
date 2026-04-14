@@ -11,9 +11,6 @@ abstract class LoginStoreBase with Store {
   @observable
   bool loggingInWithEmail = false;
 
-  @observable
-  bool loggingInWithGoogle = false;
-
   @action
   isValidFields(bool isValidFields) {
     loginButtonEnabled = false;
@@ -24,11 +21,5 @@ abstract class LoginStoreBase with Store {
   loggingInWithEmailInProgress(bool logging) {
     loggingInWithEmail = false;
     loggingInWithEmail = logging;
-  }
-
-  @action
-  loggingInWithGoogleInProgress(bool logging) {
-    loggingInWithGoogle = false;
-    loggingInWithGoogle = logging;
   }
 }

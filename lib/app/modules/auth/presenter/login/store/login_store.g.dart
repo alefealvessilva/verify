@@ -41,22 +41,6 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
-  late final _$loggingInWithGoogleAtom =
-      Atom(name: 'LoginStoreBase.loggingInWithGoogle', context: context);
-
-  @override
-  bool get loggingInWithGoogle {
-    _$loggingInWithGoogleAtom.reportRead();
-    return super.loggingInWithGoogle;
-  }
-
-  @override
-  set loggingInWithGoogle(bool value) {
-    _$loggingInWithGoogleAtom.reportWrite(value, super.loggingInWithGoogle, () {
-      super.loggingInWithGoogle = value;
-    });
-  }
-
   late final _$LoginStoreBaseActionController =
       ActionController(name: 'LoginStoreBase', context: context);
 
@@ -83,22 +67,10 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   @override
-  dynamic loggingInWithGoogleInProgress(bool logging) {
-    final _$actionInfo = _$LoginStoreBaseActionController.startAction(
-        name: 'LoginStoreBase.loggingInWithGoogleInProgress');
-    try {
-      return super.loggingInWithGoogleInProgress(logging);
-    } finally {
-      _$LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 loginButtonEnabled: ${loginButtonEnabled},
-loggingInWithEmail: ${loggingInWithEmail},
-loggingInWithGoogle: ${loggingInWithGoogle}
+loggingInWithEmail: ${loggingInWithEmail}
     ''';
   }
 }

@@ -55,7 +55,6 @@ import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
 import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
 import 'package:verify/app/modules/auth/domain/usecase/get_logged_user_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/login_with_email_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/login_with_google_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/logout_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/recover_account_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/register_with_email_usecase.dart';
@@ -136,7 +135,6 @@ class AppModule extends Module {
     i.addSingleton<AuthRepository>(AuthRepositoryImpl.new);
     //Use Cases
     i.add<LoginWithEmailUseCase>(LoginWithEmailUseCaseImpl.new);
-    i.add<LoginWithGoogleUseCase>(LoginWithGoogleImpl.new);
     i.add<GetLoggedUserUseCase>(GetLoggedUserUseCaseImpl.new);
     i.add<RemoveUserThemeModePreferenceUseCase>(
       RemoveUserThemeModePreferenceUseCaseImpl.new,

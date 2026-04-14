@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:verify/app/modules/auth/presenter/login/controller/login_controller.dart';
@@ -123,43 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    if (Platform.isAndroid) ...[
-                      const Row(
-                        children: [
-                          Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('OU'),
-                          ),
-                          Expanded(child: Divider()),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Observer(
-                        builder: (_) => OutlinedButton.icon(
-                          onPressed: store.loggingInWithGoogle
-                              ? null
-                              : _loginWithGoogle,
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 56),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          icon: store.loggingInWithGoogle
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
-                                )
-                              : const Icon(Icons.g_mobiledata_rounded,
-                                  size: 32),
-                          label: const Text('Continuar com o Google'),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
               ),
@@ -200,20 +161,5 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
-
-  Future<void> _loginWithGoogle() async {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    await controller.loginWithGoogle().then((errorMessage) {
-      if (errorMessage != null) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          CustomSnackBar(
-            message: errorMessage,
-            snackBarType: SnackBarType.error,
-          ),
-        );
-      }
-    });
-  }
 }
+
