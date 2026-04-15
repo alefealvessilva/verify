@@ -70,8 +70,6 @@ dependencies:
   google_mobile_ads: ^6.0.0
   get_it: ^8.0.3
   window_size: ^0.1.0
-  package_info_plus: ^8.1.2
-  ota_update: ^7.0.1
   flutter_localizations:
     sdk: flutter
   flutter_dotenv: ^6.0.0

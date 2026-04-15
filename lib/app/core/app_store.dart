@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/read_user_theme_mode_preference_usecase.dart';
 import 'package:verify/app/core/auth_store.dart';
-import 'package:verify/app/core/remote_config_store.dart';
+import 'package:verify/app/core/auth_store.dart';
 
 part 'app_store.g.dart';
 
@@ -12,9 +12,8 @@ class AppStore = AppStoreBase with _$AppStore;
 
 abstract class AppStoreBase with Store {
   final AuthStore _authStore;
-  final RemoteConfigStore _remoteConfigStore;
-
-  AppStoreBase(this._authStore, this._remoteConfigStore);
+  
+  AppStoreBase(this._authStore);
 
   @observable
   bool loading = false;
@@ -27,20 +26,15 @@ abstract class AppStoreBase with Store {
 
   @computed
   String get idealRoute {
-    final isMaint = _remoteConfigStore.isMaintenance;
-    final needsUpd = _remoteConfigStore.needsUpdate;
     final user = _authStore.loggedUser;
 
-    final route = _calculateIdealRoute(isMaint, needsUpd, user);
+    final route = _calculateIdealRoute(user);
     debugPrint(
         'AppStore: IdealRoute calculated: $route (User: ${user?.id}, Status: ${user?.status}, Role: ${user?.role})');
     return route;
   }
 
-  String _calculateIdealRoute(
-      bool isMaint, bool needsUpd, LoggedUserInfoEntity? user) {
-    if (isMaint) return '/maintenance';
-    if (needsUpd) return '/update';
+  String _calculateIdealRoute(LoggedUserInfoEntity? user) {
     if (user == null) return '/auth/login';
 
     if (user.role == 'none' || user.tenantId == null || user.role.isEmpty) {

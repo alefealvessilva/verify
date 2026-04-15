@@ -13,9 +13,6 @@ import 'package:verify/app/modules/auth/presenter/login/view/login_page.dart';
 import 'package:verify/app/modules/auth/presenter/recover/controller/recover_account_page_controller.dart';
 import 'package:verify/app/modules/auth/presenter/recover/store/recover_account_store.dart';
 import 'package:verify/app/modules/auth/presenter/recover/view/recover_account_page.dart';
-import 'package:verify/app/core/remote_config_store.dart';
-import 'package:verify/app/modules/config/maintenance/view/maintenance_page.dart';
-import 'package:verify/app/modules/config/maintenance/view/update_page.dart';
 import 'package:verify/app/modules/auth/presenter/onboarding/controller/onboarding_controller.dart';
 import 'package:verify/app/modules/auth/presenter/onboarding/store/onboarding_store.dart';
 import 'package:verify/app/modules/auth/presenter/onboarding/view/onboarding_page.dart';
@@ -103,10 +100,8 @@ class AppModule extends Module {
 
     /// Global Stores
     i.addInstance<AuthStore>(AuthStore());
-    i.addInstance<RemoteConfigStore>(
-        RemoteConfigStore(i.get<SupabaseClient>()));
     i.addInstance<AppStore>(
-        AppStore(i.get<AuthStore>(), i.get<RemoteConfigStore>()));
+        AppStore(i.get<AuthStore>()));
     i.addInstance<ApiCredentialsStore>(ApiCredentialsStore());
     i.add<AdMobStore>(AdMobStore.new);
 
@@ -306,16 +301,6 @@ class AppModule extends Module {
       '/timeline',
       child: (_) => const TimelinePage(),
       transition: TransitionType.fadeIn,
-    );
-    r.child(
-      '/maintenance',
-      child: (_) => const MaintenancePage(),
-      transition: TransitionType.noTransition,
-    );
-    r.child(
-      '/update',
-      child: (_) => const UpdatePage(),
-      transition: TransitionType.noTransition,
     );
     super.routes(r);
   }

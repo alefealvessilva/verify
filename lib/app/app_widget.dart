@@ -10,7 +10,6 @@ import 'package:verify/app/core/admob_store.dart';
 import 'package:verify/app/core/api_credentials_store.dart';
 import 'package:verify/app/core/app_store.dart';
 import 'package:verify/app/core/auth_store.dart';
-import 'package:verify/app/core/remote_config_store.dart';
 import 'package:verify/app/shared/extensions/app_scroll_behavior.dart';
 
 import 'package:verify/app/shared/themes/theme.dart';
@@ -28,7 +27,6 @@ class _AppWidgetState extends State<AppWidget> {
   final authStore = Modular.get<AuthStore>();
   final apiCredentialsStore = Modular.get<ApiCredentialsStore>();
   final adMobStore = Modular.get<AdMobStore>();
-  final remoteConfigStore = Modular.get<RemoteConfigStore>();
 
   bool intialized = false;
   late final List<ReactionDisposer> _disposers;
@@ -40,8 +38,6 @@ class _AppWidgetState extends State<AppWidget> {
       await appStore.loadData();
       await authStore.loadData();
       await apiCredentialsStore.loadData();
-      await remoteConfigStore.fetchConfig();
-      remoteConfigStore.initRealtimeListeners();
       if (Platform.isAndroid || Platform.isIOS) {
         await adMobStore.initAdMob();
       }
