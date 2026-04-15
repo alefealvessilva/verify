@@ -1,3 +1,14 @@
+## [1.3.0+14] - 15-04-2026
+
+### Removido
+- Lógica de atualização remota (OTA via Supabase e GitHub) agora que temos acesso ao Play Console.
+- Permissões Android desnecessárias (`READ_EXTERNAL_STORAGE`, `REQUEST_INSTALL_PACKAGES`) para maior privacidade e conformidade.
+- `FileProvider` e configurações de caminhos associadas.
+
+### Alterado
+- Incremento de versão e preparação para produção (Play Store Bundle).
+- Otimização de build com Minificação e ShrinkResources no Android.
+
 ## [1.2.3+13] - 14-04-2026
 
 ### Alterado

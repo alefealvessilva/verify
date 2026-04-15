@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/read_user_theme_mode_preference_usecase.dart';
 import 'package:verify/app/core/auth_store.dart';
-import 'package:verify/app/core/auth_store.dart';
 
 part 'app_store.g.dart';
 
@@ -12,7 +11,7 @@ class AppStore = AppStoreBase with _$AppStore;
 
 abstract class AppStoreBase with Store {
   final AuthStore _authStore;
-  
+
   AppStoreBase(this._authStore);
 
   @observable
