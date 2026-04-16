@@ -4,12 +4,12 @@ import 'package:verify/app/core/api_credentials_store.dart';
 import 'package:verify/app/modules/home/store/home_store.dart';
 import 'package:verify/app/modules/timeline/store/timeline_store.dart';
 import 'package:verify/app/shared/extensions/date_time.dart';
-import 'package:verify/app/shared/services/pix_services/bb_pix_api_service/bb_pix_api_service.dart';
-import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/sicoob_pix_api_service.dart';
+import 'package:verify/app/shared/services/pix_services/bb_pix_api_service/i_bb_pix_api_service.dart';
+import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/i_sicoob_pix_api_service.dart';
 
 class TimelineController {
-  final SicoobPixApiService _sicoobPixApiService;
-  final BBPixApiService _bbPixApiService;
+  final ISicoobPixApiService _sicoobPixApiService;
+  final IBBPixApiService _bbPixApiService;
 
   final store = Modular.get<TimelineStore>();
   final apiStore = Modular.get<ApiCredentialsStore>();

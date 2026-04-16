@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-abstract class RegisterLog {
+abstract class IRegisterLog {
   void call(Object e);
 }
 
-class RegisterLogImpl implements RegisterLog {
+class RegisterLogImpl implements IRegisterLog {
   @override
   void call(Object e) async {
     final error = 'Error: $e';

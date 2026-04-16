@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pix_sicoob/pix_sicoob.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 import 'package:verify/app/shared/services/pix_services/models/verify_pix_model.dart';
 import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/error_handler/sicoob_pix_api_error_handler.dart';
 import 'package:verify/app/shared/extensions/date_time.dart';
 
-abstract class SicoobPixApiService {
+abstract class ISicoobPixApiService {
   Future<String?> validateCredentials({
     required String clientID,
     required String certificateBase64String,
@@ -20,10 +20,10 @@ abstract class SicoobPixApiService {
   });
 }
 
-class SicoobPixApiServiceImpl implements SicoobPixApiService {
+class SicoobPixApiServiceImpl implements ISicoobPixApiService {
   final SicoobPixApiServiceErrorHandler _apiServiceErrorHandler;
-  final SendLogsToWeb _sendLogsToWeb;
-  final RegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
 
   SicoobPixApiServiceImpl(
     this._apiServiceErrorHandler,

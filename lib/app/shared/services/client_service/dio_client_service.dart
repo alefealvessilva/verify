@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:verify/app/shared/services/client_service/client_service.dart';
+import 'package:verify/app/shared/services/client_service/i_client_service.dart';
 
-class DioClientService implements ClientService {
+class DioClientService implements IClientService {
   final dio = Dio();
   @override
   Future<void> post({

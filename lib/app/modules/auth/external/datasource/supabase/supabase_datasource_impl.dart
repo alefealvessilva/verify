@@ -3,18 +3,18 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
 import 'package:verify/app/modules/auth/external/datasource/supabase/error_handler/supabase_auth_error_handler.dart';
-import 'package:verify/app/modules/auth/infra/datasource/auth_datasource.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_auth_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/models/user_model.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 
-class SupabaseAuthDataSourceImpl implements AuthDataSource {
+class SupabaseAuthDataSourceImpl implements IAuthDataSource {
   final SupabaseClient _supabase;
-  final ProfileDataSource _profileDataSource;
+  final IProfileDataSource _profileDataSource;
   final SupabaseAuthErrorHandler _errorHandler;
-  final RegisterLog _registerLog;
-  final SendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
 
   SupabaseAuthDataSourceImpl(
     this._supabase,

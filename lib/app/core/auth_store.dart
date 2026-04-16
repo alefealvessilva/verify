@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
-import 'package:verify/app/modules/auth/domain/usecase/get_logged_user_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/logout_usecase.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_get_logged_user_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_logout_usecase.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/models/tenant_model.dart';
 part 'auth_store.g.dart';
 
@@ -47,7 +47,7 @@ abstract class AuthStoreBase with Store {
     try {
       loading = true;
       debugPrint('AuthStore: Starting loadData...');
-      final useCase = Modular.get<GetLoggedUserUseCase>();
+      final useCase = Modular.get<IGetLoggedUserUseCase>();
       
       debugPrint('AuthStore: Fetching current user profile...');
       final user = await useCase();
@@ -62,7 +62,7 @@ abstract class AuthStoreBase with Store {
         if (user.tenantId != null) {
           try {
             debugPrint('AuthStore: Fetching tenant details: ${user.tenantId}');
-            final profileDataSource = Modular.get<ProfileDataSource>();
+            final profileDataSource = Modular.get<IProfileDataSource>();
             fetchedTenant = await profileDataSource.getTenant(user.tenantId!);
             debugPrint('AuthStore: Tenant identity: ${fetchedTenant.name}');
           } catch (e) {
@@ -88,7 +88,7 @@ abstract class AuthStoreBase with Store {
   @action
   Future<void> signOut() async {
     try {
-      final logoutUseCase = Modular.get<LogoutUseCase>();
+      final logoutUseCase = Modular.get<ILogoutUseCase>();
       await logoutUseCase();
     } finally {
       runInAction(() {

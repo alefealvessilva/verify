@@ -1,8 +1,8 @@
-import 'package:verify/app/modules/database/infra/datasource/api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_api_credentials_datasource.dart';
 import 'package:verify/app/modules/database/infra/models/bb_api_credentials_model.dart';
 import 'package:verify/app/modules/database/infra/models/sicoob_api_credentials_model.dart';
 
-abstract class CloudApiCredentialsDataSource extends ApiCredentialsDataSource {
+abstract class ICloudApiCredentialsDataSource extends IApiCredentialsDataSource {
   // Sicoob
   @override
   Future<void> saveSicoobApiCredentials({

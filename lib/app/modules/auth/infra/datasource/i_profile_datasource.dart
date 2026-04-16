@@ -2,7 +2,7 @@ import 'package:verify/app/modules/auth/infra/models/tenant_model.dart';
 import 'package:verify/app/modules/auth/infra/models/user_model.dart';
 import 'package:verify/app/modules/auth/infra/models/user_permissions_model.dart';
 
-abstract class ProfileDataSource {
+abstract class IProfileDataSource {
   Future<UserModel> getProfile(String id);
   Future<void> updateProfile(UserModel user);
   Future<TenantModel> getTenant(String id);

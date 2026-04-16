@@ -1,11 +1,11 @@
 import 'dart:math';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/models/tenant_model.dart';
 import 'package:verify/app/modules/auth/infra/models/user_model.dart';
 import 'package:verify/app/modules/auth/infra/models/user_permissions_model.dart';
 
-class SupabaseProfileDataSourceImpl implements ProfileDataSource {
+class SupabaseProfileDataSourceImpl implements IProfileDataSource {
   final SupabaseClient _supabase;
 
   SupabaseProfileDataSourceImpl(this._supabase);

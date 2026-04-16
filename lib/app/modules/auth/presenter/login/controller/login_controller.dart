@@ -4,8 +4,8 @@ import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/core/api_credentials_store.dart';
 import 'package:verify/app/core/auth_store.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
-import 'package:verify/app/modules/auth/domain/entities/login_credentials_entity.dart';
-import 'package:verify/app/modules/auth/domain/usecase/login_with_email_usecase.dart';
+
+import 'package:verify/app/modules/auth/domain/usecase/i_login_with_email_usecase.dart';
 import 'package:verify/app/modules/auth/presenter/login/store/login_store.dart';
 import 'package:verify/app/modules/auth/utils/email_regex.dart';
 import 'package:verify/app/modules/auth/utils/password_regex.dart';
@@ -19,7 +19,7 @@ import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 class LoginController {
   final LoginStore _loginStore;
-  final LoginWithEmailUseCase _loginWithEmailUseCase;
+  final ILoginWithEmailUseCase _loginWithEmailUseCase;
   final ReadSicoobApiCredentialsUseCase _readSicoobApiCredentialsUseCase;
   final ReadBBApiCredentialsUseCase _readBBApiCredentialsUseCase;
   final SaveSicoobApiCredentialsUseCase _saveSicoobApiCredentialsUseCase;
@@ -56,12 +56,12 @@ class LoginController {
     emailFocus.unfocus();
     passwordFocus.unfocus();
     _loginStore.loggingInWithEmailInProgress(true);
-    final loginCredentials = LoginCredentialsEntity(
+    // Login credentials are now passed directly to the usecase as named parameters.
+
+    final result = await _loginWithEmailUseCase(
       email: emailController.text,
       password: passwordController.text,
     );
-
-    final result = await _loginWithEmailUseCase(loginCredentials);
 
     return result.fold(
       (user) async {

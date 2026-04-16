@@ -1,6 +1,6 @@
 import 'package:pix_bb/pix_bb.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 
 enum BBPixApiErrorType {
   differenceBetweenDatesTooLong(
@@ -39,8 +39,8 @@ enum BBPixApiErrorType {
 }
 
 class BBPixApiServiceErrorHandler {
-  final RegisterLog _registerLog;
-  final SendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
 
   late BBPixApiErrorType errorType;
 

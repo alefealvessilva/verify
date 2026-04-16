@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 
 enum SupabaseAuthErrorType {
   invalidCredentials(
@@ -35,8 +35,8 @@ enum SupabaseAuthErrorType {
 }
 
 class SupabaseAuthErrorHandler {
-  final RegisterLog _registerLog;
-  final SendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
 
   SupabaseAuthErrorHandler(
     this._registerLog,

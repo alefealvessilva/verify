@@ -1,12 +1,12 @@
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
-import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
+import 'package:verify/app/modules/auth/domain/repositories/i_auth_repository.dart';
 
-abstract class GetLoggedUserUseCase {
+abstract class IGetLoggedUserUseCase {
   Future<LoggedUserInfoEntity?> call();
 }
 
-class GetLoggedUserUseCaseImpl implements GetLoggedUserUseCase {
-  final AuthRepository _authRepository;
+class GetLoggedUserUseCaseImpl implements IGetLoggedUserUseCase {
+  final IAuthRepository _authRepository;
 
   GetLoggedUserUseCaseImpl(this._authRepository);
   @override

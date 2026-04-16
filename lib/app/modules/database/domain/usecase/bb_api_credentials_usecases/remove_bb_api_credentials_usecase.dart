@@ -1,6 +1,6 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
-import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_api_credentials_repository.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 abstract class RemoveBBApiCredentialsUseCase {
@@ -12,7 +12,7 @@ abstract class RemoveBBApiCredentialsUseCase {
 
 class RemoveBBApiCredentialsUseCaseImpl
     implements RemoveBBApiCredentialsUseCase {
-  final ApiCredentialsRepository _apiCredentialsRepository;
+  final IApiCredentialsRepository _apiCredentialsRepository;
   RemoveBBApiCredentialsUseCaseImpl(this._apiCredentialsRepository);
   @override
   Future<ResultDart<Unit, ApiCredentialsError>> call({

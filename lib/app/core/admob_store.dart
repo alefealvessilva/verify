@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mobx/mobx.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 part 'admob_store.g.dart';
 
 class AdMobStore = AdMobStoreBase with _$AdMobStore;
@@ -52,8 +52,8 @@ abstract class AdMobStoreBase with Store {
             bannerAd = ad as BannerAd;
           },
           onAdFailedToLoad: (ad, error) async {
-            final registerLog = Modular.get<RegisterLog>();
-            final sendLogsToWeb = Modular.get<SendLogsToWeb>();
+            final registerLog = Modular.get<IRegisterLog>();
+            final sendLogsToWeb = Modular.get<ISendLogsToWeb>();
             final message =
                 'Ad load failed (code=${error.code} message=${error.message})';
             registerLog(message);

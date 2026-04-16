@@ -1,14 +1,14 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
 import 'package:verify/app/modules/database/external/datasource/supabase/error_handler/supabase_database_error_handler.dart';
-import 'package:verify/app/modules/database/infra/datasource/cloud_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_cloud_api_credentials_datasource.dart';
 import 'package:verify/app/modules/database/infra/models/bb_api_credentials_model.dart';
 import 'package:verify/app/modules/database/infra/models/sicoob_api_credentials_model.dart';
 import 'package:verify/app/modules/database/utils/data_crypto.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 class SupabaseApiCredentialsDataSourceImpl
-    implements CloudApiCredentialsDataSource {
+    implements ICloudApiCredentialsDataSource {
   final SupabaseClient _supabase;
   final SupabaseDatabaseErrorHandler _errorHandler;
   final DataCrypto _dataCrypto;

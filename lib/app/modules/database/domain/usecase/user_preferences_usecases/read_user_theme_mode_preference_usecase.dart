@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/user_preferences_error.dart';
-import 'package:verify/app/modules/database/domain/repository/user_preferences_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_user_preferences_repository.dart';
 
 abstract class ReadUserThemeModePreferenceUseCase {
   Future<ResultDart<ThemeMode, UserPreferencesError>> call();
@@ -9,7 +9,7 @@ abstract class ReadUserThemeModePreferenceUseCase {
 
 class ReadUserThemeModePreferenceUseCaseImpl
     implements ReadUserThemeModePreferenceUseCase {
-  final UserPreferencesRepository _userPreferencesRepository;
+  final IUserPreferencesRepository _userPreferencesRepository;
 
   ReadUserThemeModePreferenceUseCaseImpl(this._userPreferencesRepository);
   @override

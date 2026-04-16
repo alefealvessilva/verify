@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:verify/app/modules/auth/domain/entities/register_credentials_entity.dart';
-import 'package:verify/app/modules/auth/domain/usecase/register_with_email_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_register_with_email_usecase.dart';
 import 'package:verify/app/modules/auth/presenter/register/store/register_store.dart';
 import 'package:verify/app/modules/auth/utils/email_regex.dart';
 import 'package:verify/app/modules/auth/utils/password_regex.dart';
 
 class RegisterController {
   final RegisterStore _registerStore;
-  final RegisterWithEmailUseCase _registerWithEmailUseCase;
+  final IRegisterWithEmailUseCase _registerWithEmailUseCase;
 
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();

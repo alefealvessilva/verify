@@ -47,40 +47,40 @@ import 'package:verify/app/modules/home/view/home_page.dart';
 import 'package:verify/app/modules/timeline/controller/timeline_controller.dart';
 import 'package:verify/app/modules/timeline/store/timeline_store.dart';
 import 'package:verify/app/modules/timeline/view/timeline_page.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
-import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
-import 'package:verify/app/modules/auth/domain/usecase/get_logged_user_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/login_with_email_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/logout_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/recover_account_usecase.dart';
-import 'package:verify/app/modules/auth/domain/usecase/register_with_email_usecase.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
+import 'package:verify/app/modules/auth/domain/repositories/i_auth_repository.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_get_logged_user_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_login_with_email_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_logout_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_recover_account_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_register_with_email_usecase.dart';
 import 'package:verify/app/modules/auth/external/datasource/supabase/error_handler/supabase_auth_error_handler.dart';
 import 'package:verify/app/modules/auth/external/datasource/supabase/supabase_datasource_impl.dart';
 import 'package:verify/app/modules/auth/external/datasource/supabase/supabase_profile_datasource_impl.dart';
-import 'package:verify/app/modules/auth/infra/datasource/auth_datasource.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_auth_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/repositories/auth_repository_impl.dart';
 import 'package:verify/app/modules/auth/domain/usecase/tenant_usecases.dart';
-import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
-import 'package:verify/app/modules/database/domain/repository/user_preferences_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_api_credentials_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_user_preferences_repository.dart';
 import 'package:verify/app/modules/database/domain/usecase/sicoob_api_credentials_usecases/save_sicoob_api_credentials_usecase.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/read_user_theme_mode_preference_usecase.dart';
 import 'package:verify/app/modules/database/domain/usecase/user_preferences_usecases/save_user_theme_mode_preference_usecase.dart';
 import 'package:verify/app/modules/database/external/datasource/supabase/error_handler/supabase_database_error_handler.dart';
 import 'package:verify/app/modules/database/external/datasource/supabase/supabase_api_credentials_datasource_impl.dart';
 import 'package:verify/app/modules/database/external/datasource/local_datasource_impl/user_preferences_datasource_impl.dart';
-import 'package:verify/app/modules/database/infra/datasource/cloud_api_credentials_datasource.dart';
-import 'package:verify/app/modules/database/infra/datasource/local_api_credentials_datasource.dart';
-import 'package:verify/app/modules/database/infra/datasource/user_preferences_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_cloud_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_local_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_user_preferences_datasource.dart';
 import 'package:verify/app/modules/database/infra/repository/api_credentials_repository_impl.dart';
 import 'package:verify/app/modules/database/infra/repository/user_preferences_repository_impl.dart';
-import 'package:verify/app/shared/services/pix_services/bb_pix_api_service/bb_pix_api_service.dart';
+import 'package:verify/app/shared/services/pix_services/bb_pix_api_service/i_bb_pix_api_service.dart';
 import 'package:verify/app/shared/services/pix_services/bb_pix_api_service/error_handler/bb_pix_api_error_handler.dart';
-import 'package:verify/app/shared/services/client_service/client_service.dart';
+import 'package:verify/app/shared/services/client_service/i_client_service.dart';
 import 'package:verify/app/shared/services/client_service/dio_client_service.dart';
 import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/error_handler/sicoob_pix_api_error_handler.dart';
-import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/sicoob_pix_api_service.dart';
+import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/i_sicoob_pix_api_service.dart';
 import 'package:verify/app/splash_screen_widget.dart';
 
 class AppModule extends Module {
@@ -91,12 +91,12 @@ class AppModule extends Module {
   void binds(Injector i) {
     /// External Clients
     i.addInstance<SupabaseClient>(Supabase.instance.client);
-    i.addInstance<ClientService>(DioClientService());
+    i.addInstance<IClientService>(DioClientService());
     i.addInstance<SharedPreferences>(sharedPreferences);
 
     ///Error Registers
-    i.add<SendLogsToWeb>(SendLogsToDiscordChannel.new);
-    i.add<RegisterLog>(RegisterLogImpl.new);
+    i.add<ISendLogsToWeb>(SendLogsToDiscordChannel.new);
+    i.add<IRegisterLog>(RegisterLogImpl.new);
 
     /// Global Stores
     i.addInstance<AuthStore>(AuthStore());
@@ -107,12 +107,12 @@ class AppModule extends Module {
 
     /// Global Services
     //SicoobPix
-    i.addSingleton<SicoobPixApiService>(SicoobPixApiServiceImpl.new);
+    i.addSingleton<ISicoobPixApiService>(SicoobPixApiServiceImpl.new);
     i.add<SicoobPixApiServiceErrorHandler>(
       SicoobPixApiServiceErrorHandler.new,
     );
     //BBPix
-    i.addSingleton<BBPixApiService>(BBPixApiServiceImpl.new);
+    i.addSingleton<IBBPixApiService>(BBPixApiServiceImpl.new);
     i.add<BBPixApiServiceErrorHandler>(
       BBPixApiServiceErrorHandler.new,
     );
@@ -124,21 +124,21 @@ class AppModule extends Module {
     //Utils
     i.add<DataCrypto>(DataCryptoImpl.new);
     //DataSource
-    i.addSingleton<ProfileDataSource>(SupabaseProfileDataSourceImpl.new);
-    i.addSingleton<AuthDataSource>(SupabaseAuthDataSourceImpl.new);
+    i.addSingleton<IProfileDataSource>(SupabaseProfileDataSourceImpl.new);
+    i.addSingleton<IAuthDataSource>(SupabaseAuthDataSourceImpl.new);
     //Repository
-    i.addSingleton<AuthRepository>(AuthRepositoryImpl.new);
+    i.addSingleton<IAuthRepository>(AuthRepositoryImpl.new);
     //Use Cases
-    i.add<LoginWithEmailUseCase>(LoginWithEmailUseCaseImpl.new);
-    i.add<GetLoggedUserUseCase>(GetLoggedUserUseCaseImpl.new);
+    i.add<ILoginWithEmailUseCase>(LoginWithEmailUseCaseImpl.new);
+    i.add<IGetLoggedUserUseCase>(GetLoggedUserUseCaseImpl.new);
     i.add<RemoveUserThemeModePreferenceUseCase>(
       RemoveUserThemeModePreferenceUseCaseImpl.new,
     );
-    i.add<RegisterWithEmailUseCase>(
+    i.add<IRegisterWithEmailUseCase>(
       RegisterWithEmailUseCaseImpl.new,
     );
-    i.add<LogoutUseCase>(LogoutUseCaseImpl.new);
-    i.add<RecoverAccountUseCase>(RecoverAccountUseCaseImpl.new);
+    i.add<ILogoutUseCase>(LogoutUseCaseImpl.new);
+    i.add<IRecoverAccountUseCase>(RecoverAccountUseCaseImpl.new);
     i.add<TenantUseCases>(TenantUseCasesImpl.new);
     //Error Handler
     i.add<SupabaseAuthErrorHandler>(
@@ -150,16 +150,16 @@ class AppModule extends Module {
       SupabaseDatabaseErrorHandler.new,
     );
     //Datasources
-    i.add<CloudApiCredentialsDataSource>(
+    i.add<ICloudApiCredentialsDataSource>(
       SupabaseApiCredentialsDataSourceImpl.new,
     );
     i.addInstance<FlutterSecureStorage>(const FlutterSecureStorage(
       aOptions: AndroidOptions(),
     ));
-    i.add<LocalApiCredentialsDataSource>(
+    i.add<ILocalApiCredentialsDataSource>(
       LocalApiCredentialsDataSourceImpl.new,
     );
-    i.add<UserPreferencesDataSource>(
+    i.add<IUserPreferencesDataSource>(
       UserPreferencesLocalDataSourceImpl.new,
     );
     // Use Cases
@@ -196,10 +196,10 @@ class AppModule extends Module {
       RemoveBBApiCredentialsUseCaseImpl.new,
     );
     //Repositories
-    i.add<ApiCredentialsRepository>(
+    i.add<IApiCredentialsRepository>(
       ApiCredentialsRepositoryImpl.new,
     );
-    i.add<UserPreferencesRepository>(
+    i.add<IUserPreferencesRepository>(
       UserPreferencesRepositoryImpl.new,
     );
     i.addInstance<HomeStore>(HomeStore());

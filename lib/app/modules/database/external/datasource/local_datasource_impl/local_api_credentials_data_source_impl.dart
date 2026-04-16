@@ -1,17 +1,17 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
-import 'package:verify/app/modules/database/infra/datasource/local_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_local_api_credentials_datasource.dart';
 import 'package:verify/app/modules/database/infra/models/sicoob_api_credentials_model.dart';
 import 'package:verify/app/modules/database/infra/models/bb_api_credentials_model.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 
 class LocalApiCredentialsDataSourceImpl
-    implements LocalApiCredentialsDataSource {
+    implements ILocalApiCredentialsDataSource {
   final FlutterSecureStorage _flutterSecureStorage;
-  final RegisterLog _registerLog;
-  final SendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
   LocalApiCredentialsDataSourceImpl(
     this._flutterSecureStorage,
     this._registerLog,

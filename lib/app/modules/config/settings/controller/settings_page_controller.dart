@@ -23,13 +23,13 @@ class SettingsPageController {
 
   Future<void> goToInstagram() async {
     final instagramAppUrl = Uri.parse(
-      'instagram://user?username=acxtechsistemas',
+      'instagram://user?username=asclabs',
     );
     final launched = await canLaunchUrl(instagramAppUrl);
 
     if (!launched) {
       final instagramUrl = Uri.parse(
-        'https://www.instagram.com/acxtechsistemas/',
+        'https://www.instagram.com/asclabs/',
       );
       await launchUrl(instagramUrl);
     }
@@ -37,14 +37,14 @@ class SettingsPageController {
 
   Future<void> goToWhatsapp() async {
     final whatsappUrl = Uri.parse(
-      'whatsapp://send?phone=5562993149401&text=Bem%20vindo%20a%20AcxTech%20Sistemas.%20Vi%20que%20vc%20veio%20pelo%20nosso%20app:%20Verify!%20Em%20que%20podemos%20ajudar%3F',
+      'whatsapp://send?phone=5562993149401&text=Bem%20vindo%20a%20ASCLABS.%20Vi%20que%20vc%20veio%20pelo%20nosso%20app:%20Verify!%20Em%20que%20podemos%20ajudar%3F',
     );
     await launchUrl(whatsappUrl);
   }
 
   Future<void> goToGithub() async {
     final githubUrl = Uri.parse(
-      'https://github.com/AcxTechSistemas',
+      'https://github.com/asclabs',
     );
     await launchUrl(githubUrl);
   }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:verify/app/shared/error_registrator/register_log.dart';
-import 'package:verify/app/shared/error_registrator/send_logs_to_web.dart';
+import 'package:verify/app/shared/error_registrator/i_register_log.dart';
+import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 import 'package:verify/app/modules/database/domain/errors/user_preferences_error.dart';
-import 'package:verify/app/modules/database/infra/datasource/user_preferences_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_user_preferences_datasource.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
-class UserPreferencesLocalDataSourceImpl implements UserPreferencesDataSource {
+class UserPreferencesLocalDataSourceImpl implements IUserPreferencesDataSource {
   final SharedPreferences _sharedPreferences;
-  final RegisterLog _registerLog;
-  final SendLogsToWeb _sendLogsToWeb;
+  final IRegisterLog _registerLog;
+  final ISendLogsToWeb _sendLogsToWeb;
 
   UserPreferencesLocalDataSourceImpl(
     this._sharedPreferences,

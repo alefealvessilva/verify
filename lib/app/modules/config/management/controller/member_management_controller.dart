@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:verify/app/modules/auth/domain/usecase/tenant_usecases.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/models/user_permissions_model.dart';
 import 'package:verify/app/modules/config/management/store/member_management_store.dart';
 
 class MemberManagementController {
   final MemberManagementStore _store;
   final TenantUseCases _tenantUseCases;
-  final ProfileDataSource _profileDataSource;
+  final IProfileDataSource _profileDataSource;
 
   MemberManagementController(
       this._store, this._tenantUseCases, this._profileDataSource);

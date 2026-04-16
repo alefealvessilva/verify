@@ -6,20 +6,20 @@ import 'package:pix_sicoob/pix_sicoob.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:verify/app/core/api_credentials_store.dart';
-import 'package:verify/app/modules/auth/domain/usecase/get_logged_user_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_get_logged_user_usecase.dart';
 import 'package:verify/app/modules/config/sicoob_settings/store/sicoob_settings_store.dart';
 import 'package:verify/app/modules/database/domain/entities/sicoob_api_credentials_entity.dart';
 import 'package:verify/app/modules/database/domain/usecase/sicoob_api_credentials_usecases/remove_sicoob_api_credentials_usecase.dart';
 import 'package:verify/app/modules/database/domain/usecase/sicoob_api_credentials_usecases/save_sicoob_api_credentials_usecase.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
-import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/sicoob_pix_api_service.dart';
+import 'package:verify/app/shared/services/pix_services/sicoob_pix_api_service/i_sicoob_pix_api_service.dart';
 
 class SicoobSettingsPageController {
-  final SicoobPixApiService _pixSicoobService;
+  final ISicoobPixApiService _pixSicoobService;
   final SicoobSettingsStore _store;
   final SaveSicoobApiCredentialsUseCase _saveSicoobApiCredentialsUseCase;
   final RemoveSicoobApiCredentialsUseCase _removeSicoobApiCredentialsUseCase;
-  final GetLoggedUserUseCase _getLoggedUserUseCase;
+  final IGetLoggedUserUseCase _getLoggedUserUseCase;
 
   //
   String certificateString = '';

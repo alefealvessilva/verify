@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:verify/app/core/auth_store.dart';
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 
 class WaitingApprovalPage extends StatefulWidget {
   const WaitingApprovalPage({super.key});
@@ -19,7 +19,7 @@ class _WaitingApprovalPageState extends State<WaitingApprovalPage> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final authStore = Modular.get<AuthStore>();
-    final profileDataSource = Modular.get<ProfileDataSource>();
+    final profileDataSource = Modular.get<IProfileDataSource>();
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -129,7 +129,7 @@ class _WaitingApprovalPageState extends State<WaitingApprovalPage> {
   }
 
   Future<void> _confirmCancel(
-      BuildContext context, ProfileDataSource ds, AuthStore store) async {
+      BuildContext context, IProfileDataSource ds, AuthStore store) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(

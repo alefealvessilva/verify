@@ -4,7 +4,7 @@ import 'package:verify/app/modules/database/domain/entities/sicoob_api_credentia
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
-abstract class ApiCredentialsRepository {
+abstract class IApiCredentialsRepository {
   // SicoobApiCredentials
   Future<ResultDart<Unit, ApiCredentialsError>> saveSicoobApiCredentials({
     required Database database,

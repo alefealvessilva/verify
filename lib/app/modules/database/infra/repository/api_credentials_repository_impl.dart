@@ -2,16 +2,16 @@ import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
 import 'package:verify/app/modules/database/domain/entities/sicoob_api_credentials_entity.dart';
 import 'package:verify/app/modules/database/domain/entities/bb_api_credentials_entity.dart';
-import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
-import 'package:verify/app/modules/database/infra/datasource/api_credentials_datasource.dart';
-import 'package:verify/app/modules/database/infra/datasource/cloud_api_credentials_datasource.dart';
-import 'package:verify/app/modules/database/infra/datasource/local_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/domain/repository/i_api_credentials_repository.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_cloud_api_credentials_datasource.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_local_api_credentials_datasource.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
-class ApiCredentialsRepositoryImpl implements ApiCredentialsRepository {
-  late ApiCredentialsDataSource _apiCredentialsDataSource;
-  final CloudApiCredentialsDataSource _cloudApiCredentialsDataSource;
-  final LocalApiCredentialsDataSource _localApiCredentialsDataSource;
+class ApiCredentialsRepositoryImpl implements IApiCredentialsRepository {
+  late IApiCredentialsDataSource _apiCredentialsDataSource;
+  final ICloudApiCredentialsDataSource _cloudApiCredentialsDataSource;
+  final ILocalApiCredentialsDataSource _localApiCredentialsDataSource;
 
   ApiCredentialsRepositoryImpl(
     this._cloudApiCredentialsDataSource,

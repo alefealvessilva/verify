@@ -1,3 +1,11 @@
+## [1.3.1+19] - 15-04-2026
+
+### Alterado
+- Revisão final de pacotes e branding da ASCLABS.
+- Refatoração de interfaces para conformidade com regras globais.
+- Remoção total e bloqueio de permissão de instalação de APKs (`REQUEST_INSTALL_PACKAGES`) para conformidade máxima com as políticas da Play Store.
+- Build do Android App Bundle para produção.
+
 ## [1.3.0+14] - 15-04-2026
 
 ### Removido

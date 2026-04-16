@@ -1,7 +1,7 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/entities/sicoob_api_credentials_entity.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
-import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_api_credentials_repository.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 abstract class ReadSicoobApiCredentialsUseCase {
@@ -13,7 +13,7 @@ abstract class ReadSicoobApiCredentialsUseCase {
 
 class ReadSicoobApiCredentialsUseCaseImpl
     implements ReadSicoobApiCredentialsUseCase {
-  final ApiCredentialsRepository _apiCredentialsRepository;
+  final IApiCredentialsRepository _apiCredentialsRepository;
   ReadSicoobApiCredentialsUseCaseImpl(this._apiCredentialsRepository);
   @override
   Future<ResultDart<SicoobApiCredentialsEntity, ApiCredentialsError>> call({

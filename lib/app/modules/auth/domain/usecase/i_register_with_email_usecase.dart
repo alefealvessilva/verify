@@ -2,16 +2,16 @@ import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/auth/domain/entities/register_credentials_entity.dart';
 import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
-import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
+import 'package:verify/app/modules/auth/domain/repositories/i_auth_repository.dart';
 
-abstract class RegisterWithEmailUseCase {
+abstract class IRegisterWithEmailUseCase {
   Future<ResultDart<LoggedUserInfoEntity, AuthError>> call(
     RegisterCredentialsEntity registerCredentialsEntity,
   );
 }
 
-class RegisterWithEmailUseCaseImpl implements RegisterWithEmailUseCase {
-  final AuthRepository _authRepository;
+class RegisterWithEmailUseCaseImpl implements IRegisterWithEmailUseCase {
+  final IAuthRepository _authRepository;
   RegisterWithEmailUseCaseImpl(this._authRepository);
 
   @override

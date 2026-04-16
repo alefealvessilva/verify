@@ -1,6 +1,6 @@
 import 'package:verify/app/modules/auth/infra/models/user_model.dart';
 
-abstract class AuthDataSource {
+abstract class IAuthDataSource {
   Future<UserModel?> currentUser();
   Future<UserModel> registerWithEmail({
     required String email,

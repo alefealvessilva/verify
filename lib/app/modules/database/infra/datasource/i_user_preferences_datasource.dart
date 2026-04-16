@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class UserPreferencesDataSource {
+abstract class IUserPreferencesDataSource {
   // Theme
   Future<void> saveUserThemePreference({
     required ThemeMode themeMode,

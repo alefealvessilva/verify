@@ -1,13 +1,13 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/auth/domain/errors/auth_error.dart';
-import 'package:verify/app/modules/auth/domain/repositories/auth_repository.dart';
+import 'package:verify/app/modules/auth/domain/repositories/i_auth_repository.dart';
 
-abstract class LogoutUseCase {
+abstract class ILogoutUseCase {
   Future<ResultDart<Unit, AuthError>> call();
 }
 
-class LogoutUseCaseImpl implements LogoutUseCase {
-  final AuthRepository _authRepository;
+class LogoutUseCaseImpl implements ILogoutUseCase {
+  final IAuthRepository _authRepository;
 
   LogoutUseCaseImpl(this._authRepository);
   @override

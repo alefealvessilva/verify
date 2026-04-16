@@ -1,7 +1,7 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/entities/bb_api_credentials_entity.dart';
 import 'package:verify/app/modules/database/domain/errors/api_credentials_error.dart';
-import 'package:verify/app/modules/database/domain/repository/api_credentials_repository.dart';
+import 'package:verify/app/modules/database/domain/repository/i_api_credentials_repository.dart';
 import 'package:verify/app/modules/database/utils/database_enums.dart';
 
 abstract class SaveBBApiCredentialsUseCase {
@@ -13,7 +13,7 @@ abstract class SaveBBApiCredentialsUseCase {
 }
 
 class SaveBBApiCredentialsUseCaseImpl implements SaveBBApiCredentialsUseCase {
-  final ApiCredentialsRepository _apiCredentialsRepository;
+  final IApiCredentialsRepository _apiCredentialsRepository;
   SaveBBApiCredentialsUseCaseImpl(this._apiCredentialsRepository);
 
   @override

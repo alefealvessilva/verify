@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:verify/app/modules/database/domain/errors/user_preferences_error.dart';
-import 'package:verify/app/modules/database/domain/repository/user_preferences_repository.dart';
-import 'package:verify/app/modules/database/infra/datasource/user_preferences_datasource.dart';
+import 'package:verify/app/modules/database/domain/repository/i_user_preferences_repository.dart';
+import 'package:verify/app/modules/database/infra/datasource/i_user_preferences_datasource.dart';
 
-class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
-  final UserPreferencesDataSource _userPreferencesDataSource;
+class UserPreferencesRepositoryImpl implements IUserPreferencesRepository {
+  final IUserPreferencesDataSource _userPreferencesDataSource;
 
   UserPreferencesRepositoryImpl(this._userPreferencesDataSource);
 

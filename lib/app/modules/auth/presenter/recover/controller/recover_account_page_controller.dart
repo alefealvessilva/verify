@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:verify/app/modules/auth/domain/usecase/recover_account_usecase.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_recover_account_usecase.dart';
 import 'package:verify/app/modules/auth/presenter/recover/store/recover_account_store.dart';
 import 'package:verify/app/modules/auth/utils/email_regex.dart';
 
 class RecoverAccountPageController {
-  final RecoverAccountUseCase _recoverAccountUseCase;
+  final IRecoverAccountUseCase _recoverAccountUseCase;
   final RecoverAccountPageStore _recoverAccountPageStore;
   final formKey = GlobalKey<FormState>();
 

@@ -1,4 +1,4 @@
-import 'package:verify/app/modules/auth/infra/datasource/profile_datasource.dart';
+import 'package:verify/app/modules/auth/infra/datasource/i_profile_datasource.dart';
 import 'package:verify/app/modules/auth/infra/models/tenant_model.dart';
 import 'package:verify/app/modules/auth/infra/models/user_permissions_model.dart';
 
@@ -10,7 +10,7 @@ abstract class TenantUseCases {
 }
 
 class TenantUseCasesImpl implements TenantUseCases {
-  final ProfileDataSource _profileDataSource;
+  final IProfileDataSource _profileDataSource;
 
   TenantUseCasesImpl(this._profileDataSource);
 
