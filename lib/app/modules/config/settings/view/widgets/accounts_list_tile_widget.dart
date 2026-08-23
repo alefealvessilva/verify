@@ -37,29 +37,30 @@ class AccountListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(24, 17, 24, 17),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: bank.backgroundColor,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(bank.logoPath),
-            const Spacer(),
-            Text(
-              hasCredentials ? 'Configurada' : 'Desconectada',
-              style: const TextStyle().copyWith(color: bank.foregroundColor),
-            ),
-            const SizedBox(width: 8),
-            Icon(
-              hasCredentials ? Icons.verified : Icons.warning_rounded,
-              color: hasCredentials ? Colors.green : Colors.red,
-            ),
-          ],
+    return Material(
+      color: bank.backgroundColor,
+      borderRadius: BorderRadius.circular(20),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(24, 17, 24, 17),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(bank.logoPath),
+              const Spacer(),
+              Text(
+                hasCredentials ? 'Configurada' : 'Desconectada',
+                style: const TextStyle().copyWith(color: bank.foregroundColor),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                hasCredentials ? Icons.verified : Icons.warning_rounded,
+                color: hasCredentials ? Colors.green : Colors.red,
+              ),
+            ],
+          ),
         ),
       ),
     );

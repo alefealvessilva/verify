@@ -19,4 +19,7 @@ abstract class IAuthRepository {
   Future<ResultDart<Unit, AuthError>> sendRecoverInstructions({
     required String email,
   });
+  Future<ResultDart<Unit, AuthError>> updatePassword({
+    required String newPassword,
+  });
 }

@@ -32,8 +32,6 @@ class _SettingsPageState extends State<SettingsPage> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    final isAdmin = authStore.loggedUser?.role == 'admin';
-
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
@@ -45,6 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Observer(builder: (context) {
+          final isAdmin = authStore.loggedUser?.role == 'admin';
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             child: Column(

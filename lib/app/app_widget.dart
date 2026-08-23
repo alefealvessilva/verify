@@ -35,6 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
     try {
       Intl.defaultLocale = 'pt_BR';
       await initializeDateFormatting();
+      authStore.initAuthListener();
       await appStore.loadData();
       await authStore.loadData();
       await apiCredentialsStore.loadData();

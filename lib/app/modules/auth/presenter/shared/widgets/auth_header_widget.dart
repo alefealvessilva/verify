@@ -10,28 +10,42 @@ class AuthHeaderWidget extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.onInverseSurface,
+        gradient: LinearGradient(
+          colors: [
+            colorScheme.primary,
+            colorScheme.primaryContainer,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
       ),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             ColorFiltered(
               colorFilter: ColorFilter.mode(
-                colorScheme.primary,
+                colorScheme.onPrimary,
                 BlendMode.srcIn,
               ),
               child: SvgPicture.asset(
                 'assets/svg/logo.svg',
+                height: 80,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'Rapido, Simples e Seguro!',
+            const SizedBox(height: 24),
+            Text(
+              'Rápido, Simples e Seguro!',
               textAlign: TextAlign.center,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: colorScheme.onPrimary,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
+              ),
             ),
+            const SizedBox(height: 32),
           ],
         ),
       ),

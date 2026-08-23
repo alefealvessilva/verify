@@ -126,6 +126,7 @@ class SupabaseAuthDataSourceImpl implements IAuthDataSource {
       final response = await _supabase.auth.signUp(
         email: email,
         password: password,
+        emailRedirectTo: 'br.com.asclabs.verify://callback/reset',
       );
       final user = response.user!;
 
@@ -172,7 +173,10 @@ class SupabaseAuthDataSourceImpl implements IAuthDataSource {
   @override
   Future<void> sendRecoverInstructions({required String email}) async {
     try {
-      await _supabase.auth.resetPasswordForEmail(email);
+      await _supabase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: 'br.com.asclabs.verify://callback/reset',
+      );
     } on AuthException catch (e) {
       final errorMessage = await _errorHandler(e);
       throw ErrorRecoverAccount(message: errorMessage);
@@ -181,6 +185,22 @@ class SupabaseAuthDataSourceImpl implements IAuthDataSource {
       _registerLog(e);
       throw Exception(
           'Ocorreu um erro ao recuperar sua conta. Tente novamente');
+    }
+  }
+
+  @override
+  Future<void> updatePassword({required String newPassword}) async {
+    try {
+      await _supabase.auth.updateUser(
+        UserAttributes(password: newPassword),
+      );
+    } on AuthException catch (e) {
+      final errorMessage = await _errorHandler(e);
+      throw ErrorRecoverAccount(message: errorMessage);
+    } catch (e) {
+      _sendLogsToWeb(e);
+      _registerLog(e);
+      throw Exception('Ocorreu um erro ao atualizar sua senha. Tente novamente');
     }
   }
 }

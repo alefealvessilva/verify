@@ -19,6 +19,10 @@ import 'package:verify/app/modules/auth/presenter/onboarding/view/onboarding_pag
 import 'package:verify/app/modules/auth/presenter/register/controller/register_controller.dart';
 import 'package:verify/app/modules/auth/presenter/register/store/register_store.dart';
 import 'package:verify/app/modules/auth/presenter/register/view/register_page.dart';
+import 'package:verify/app/modules/auth/presenter/reset_password/controller/reset_password_controller.dart';
+import 'package:verify/app/modules/auth/presenter/reset_password/store/reset_password_store.dart';
+import 'package:verify/app/modules/auth/presenter/reset_password/view/reset_password_page.dart';
+import 'package:verify/app/modules/auth/domain/usecase/i_update_password_usecase.dart';
 import 'package:verify/app/modules/config/bb_settings/controller/bb_settings_page_controller.dart';
 import 'package:verify/app/modules/config/bb_settings/store/bb_settings_store.dart';
 import 'package:verify/app/modules/config/bb_settings/view/bb_settings_page.dart';
@@ -139,6 +143,7 @@ class AppModule extends Module {
     );
     i.add<ILogoutUseCase>(LogoutUseCaseImpl.new);
     i.add<IRecoverAccountUseCase>(RecoverAccountUseCaseImpl.new);
+    i.add<IUpdatePasswordUseCase>(UpdatePasswordUseCaseImpl.new);
     i.add<TenantUseCases>(TenantUseCasesImpl.new);
     //Error Handler
     i.add<SupabaseAuthErrorHandler>(
@@ -207,10 +212,14 @@ class AppModule extends Module {
     i.addInstance<LoginStore>(LoginStore());
     i.addInstance<RegisterStore>(RegisterStore());
     i.addInstance<RecoverAccountPageStore>(RecoverAccountPageStore());
+    i.addInstance<ResetPasswordStore>(ResetPasswordStore());
     i.add<LoginController>(LoginController.new);
     i.add<RegisterController>(RegisterController.new);
     i.add<RecoverAccountPageController>(
       RecoverAccountPageController.new,
+    );
+    i.add<ResetPasswordController>(
+      ResetPasswordController.new,
     );
     i.addInstance<OnboardingStore>(OnboardingStore());
     i.add<OnboardingController>(OnboardingController.new);
@@ -277,6 +286,12 @@ class AppModule extends Module {
       duration: const Duration(milliseconds: 300),
     );
     r.child(
+      '/auth/reset-password',
+      child: (_) => const ResetPasswordPage(),
+      transition: TransitionType.fadeIn,
+      duration: const Duration(milliseconds: 300),
+    );
+    r.child(
       '/home',
       child: (_) => const HomePage(),
       transition: TransitionType.fadeIn,
@@ -301,6 +316,9 @@ class AppModule extends Module {
       '/timeline',
       child: (_) => const TimelinePage(),
       transition: TransitionType.fadeIn,
+    );
+    r.wildcard(
+      child: (_) => const SplashScreen(),
     );
     super.routes(r);
   }

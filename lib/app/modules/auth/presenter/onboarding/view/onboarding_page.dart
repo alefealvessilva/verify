@@ -25,7 +25,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Observer(
             builder: (_) {
@@ -89,25 +89,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   const SizedBox(height: 48),
                   
                   // Formulários Animados
-                  Expanded(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 400),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0.05, 0),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: store.isGestor
-                          ? _buildGestorForm(colorScheme, textTheme)
-                          : _buildOperadorForm(colorScheme, textTheme),
-                    ),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 400),
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0.05, 0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: store.isGestor
+                        ? _buildGestorForm(colorScheme, textTheme)
+                        : _buildOperadorForm(colorScheme, textTheme),
                   ),
 
                   const SizedBox(height: 24),

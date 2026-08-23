@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:verify/app/modules/auth/presenter/login/controller/login_controller.dart';
 import 'package:verify/app/modules/auth/presenter/login/store/login_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,29 +31,15 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 64),
+              const SizedBox(height: 120),
               // Logo e Boas-vindas
               Center(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-                    shape: BoxShape.circle,
+                  child: SvgPicture.asset(
+                    'assets/svg/logo.svg',
+                    height: 50,
                   ),
-                  child: Icon(
-                    Icons.security_rounded,
-                    size: 48,
-                    color: colorScheme.primary,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Bem-vindo ao Verify',
-                textAlign: TextAlign.center,
-                style: textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -63,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 64),
+              const SizedBox(height: 120),
               // Formulário
               Form(
                 key: controller.formKey,
@@ -162,4 +149,3 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 }
-

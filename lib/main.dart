@@ -30,7 +30,7 @@ void main() async {
 
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_PUBLISHKEY']!,
+    anonKey: dotenv.env['SUPABASE_PUBLISHKEY']!, // ignore: deprecated_member_use
   );
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

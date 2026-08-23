@@ -2,15 +2,15 @@ part of 'theme.dart';
 
 const _lightColorScheme = ColorScheme(
   brightness: Brightness.light,
-  primary: Color(0xFF6366F1), // Indigo
+  primary: Color(0xFF059669), // Emerald
   onPrimary: Color(0xFFFFFFFF),
-  primaryContainer: Color(0xFFE0E7FF),
-  onPrimaryContainer: Color(0xFF1E1B4B),
-  secondary: Color(0xFF8B5CF6), // Violet
+  primaryContainer: Color(0xFFD1FAE5),
+  onPrimaryContainer: Color(0xFF064E3B),
+  secondary: Color(0xFF0D9488), // Teal
   onSecondary: Color(0xFFFFFFFF),
-  secondaryContainer: Color(0xFFEDE9FE),
-  onSecondaryContainer: Color(0xFF2E1065),
-  tertiary: Color(0xFF0EA5E9), // Sky
+  secondaryContainer: Color(0xFFCCFBF1),
+  onSecondaryContainer: Color(0xFF115E59),
+  tertiary: Color(0xFF0EA5E9),
   onTertiary: Color(0xFFFFFFFF),
   tertiaryContainer: Color(0xFFE0F2FE),
   onTertiaryContainer: Color(0xFF082F49),
@@ -25,41 +25,41 @@ const _lightColorScheme = ColorScheme(
   outline: Color(0xFF94A3B8),
   onInverseSurface: Color(0xFFF1F5F9),
   inverseSurface: Color(0xFF1E293B),
-  inversePrimary: Color(0xFFC7D2FE),
+  inversePrimary: Color(0xFF6EE7B7),
   shadow: Color(0xFF000000),
-  surfaceTint: Color(0xFF6366F1),
+  surfaceTint: Color(0xFF059669),
   outlineVariant: Color(0xFFCBD5E1),
   scrim: Color(0xFF000000),
 );
 
 const _darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color(0xFF818CF8), // Indigo Light
-  onPrimary: Color(0xFF1E1B4B),
-  primaryContainer: Color(0xFF312E81),
-  onPrimaryContainer: Color(0xFFE0E7FF),
-  secondary: Color(0xFFA78BFA), // Violet Light
-  onSecondary: Color(0xFF2E1065),
-  secondaryContainer: Color(0xFF4C1D95),
-  onSecondaryContainer: Color(0xFFEDE9FE),
+  primary: Color(0xFF10B981), // Emerald 500
+  onPrimary: Color(0xFF003825),
+  primaryContainer: Color(0xFF005238),
+  onPrimaryContainer: Color(0xFFD1FAE5),
+  secondary: Color(0xFF14B8A6), // Teal 500
+  onSecondary: Color(0xFF042F2E),
+  secondaryContainer: Color(0xFF0F766E),
+  onSecondaryContainer: Color(0xFFCCFBF1),
   tertiary: Color(0xFF38BDF8),
-  onTertiary: Color(0xFF082F49),
-  tertiaryContainer: Color(0xFF0C4A6E),
+  onTertiary: Color(0xFF00334E),
+  tertiaryContainer: Color(0xFF004B72),
   onTertiaryContainer: Color(0xFFE0F2FE),
   error: Color(0xFFF87171),
   errorContainer: Color(0xFF7F1D1D),
   onError: Color(0xFF450A0A),
   onErrorContainer: Color(0xFFFEE2E2),
-  surface: Color(0xFF0F172A), // Slate Darkest
+  surface: Color(0xFF0B1120), // Very dark blue/slate
   onSurface: Color(0xFFF8FAFC),
   surfaceContainerHighest: Color(0xFF1E293B),
   onSurfaceVariant: Color(0xFF94A3B8),
   outline: Color(0xFF475569),
   onInverseSurface: Color(0xFF0F172A),
   inverseSurface: Color(0xFFF8FAFC),
-  inversePrimary: Color(0xFF6366F1),
+  inversePrimary: Color(0xFF059669),
   shadow: Color(0xFF000000),
-  surfaceTint: Color(0xFF818CF8),
+  surfaceTint: Color(0xFF10B981),
   outlineVariant: Color(0xFF1E293B),
   scrim: Color(0xFF000000),
 );

@@ -34,6 +34,10 @@ abstract class AppStoreBase with Store {
   }
 
   String _calculateIdealRoute(LoggedUserInfoEntity? user) {
+    if (_authStore.isResettingPassword) {
+      return '/auth/reset-password';
+    }
+
     if (user == null) return '/auth/login';
 
     if (user.role == 'none' || user.tenantId == null || user.role.isEmpty) {

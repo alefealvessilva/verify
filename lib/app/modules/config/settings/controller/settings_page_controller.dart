@@ -57,11 +57,11 @@ class SettingsPageController {
   }
 
   void goToSicoobSettings() {
-    Modular.to.pushNamed('./sicoob-settings');
+    Modular.to.pushNamed('/settings/sicoob-settings');
   }
 
   void goToBBSettings() {
-    Modular.to.pushNamed('./bb-settings');
+    Modular.to.pushNamed('/settings/bb-settings');
   }
 
   Future<void> logout() async {

@@ -101,4 +101,20 @@ class AuthRepositoryImpl implements IAuthRepository {
       ));
     }
   }
+
+  @override
+  Future<ResultDart<Unit, AuthError>> updatePassword({
+    required String newPassword,
+  }) async {
+    try {
+      await _authDataSource.updatePassword(newPassword: newPassword);
+      return Success(unit);
+    } on ErrorRecoverAccount catch (e) {
+      return Failure(e);
+    } catch (e) {
+      return Failure(ErrorRecoverAccount(
+        message: 'Ocorreu um erro ao atualizar sua senha. Tente novamente',
+      ));
+    }
+  }
 }

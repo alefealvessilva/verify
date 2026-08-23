@@ -13,4 +13,5 @@ abstract class IAuthDataSource {
   Future<UserModel> loginWithGoogle();
   Future<void> logout();
   Future<void> sendRecoverInstructions({required String email});
+  Future<void> updatePassword({required String newPassword});
 }

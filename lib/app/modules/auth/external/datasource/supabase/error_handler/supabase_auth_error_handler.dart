@@ -4,25 +4,65 @@ import 'package:verify/app/shared/error_registrator/i_send_logs_to_web.dart';
 
 enum SupabaseAuthErrorType {
   invalidCredentials(
+    errorCode: 'invalid login credentials',
+    message: 'Credenciais de login inválidas. Verifique seu email e senha.',
+  ),
+  invalidCredentialsAlt(
     errorCode: 'invalid_credentials',
-    message: 'O email ou a senha estão incorretos',
+    message: 'O email ou a senha estão incorretos.',
   ),
   userNotFound(
+    errorCode: 'user not found',
+    message: 'Usuário não encontrado. Revise suas informações.',
+  ),
+  userNotFoundAlt(
     errorCode: 'user_not_found',
-    message: 'Usuário não encontrado, revise suas informações',
+    message: 'Usuário não encontrado. Revise suas informações.',
   ),
   emailAlreadyInUse(
-    errorCode: 'email_exists',
-    message: 'Usuário já cadastrado',
+    errorCode: 'user already registered',
+    message: 'Este usuário já está cadastrado.',
+  ),
+  emailAlreadyInUseAlt(
+    errorCode: 'user_already_exists',
+    message: 'Este usuário já está cadastrado.',
   ),
   weakPassword(
     errorCode: 'weak_password',
-    message: 'A senha fornecida é muito fraca',
+    message: 'A senha fornecida é muito fraca.',
+  ),
+  weakPasswordAlt(
+    errorCode: 'password should be at least',
+    message: 'A senha fornecida é muito fraca ou curta.',
+  ),
+  emailNotConfirmed(
+    errorCode: 'email not confirmed',
+    message: 'Seu email ainda não foi confirmado.',
+  ),
+  invalidLink(
+    errorCode: 'email link is invalid or has expired',
+    message: 'O link do email é inválido ou expirou.',
+  ),
+  invalidToken(
+    errorCode: 'token has expired or is invalid',
+    message: 'O token de segurança é inválido ou expirou.',
+  ),
+  samePassword(
+    errorCode: 'new password should be different',
+    message: 'A nova senha deve ser diferente da senha antiga.',
+  ),
+  rateLimit(
+    errorCode: 'rate limit exceeded',
+    message: 'Muitas tentativas em pouco tempo. Tente novamente mais tarde.',
+  ),
+  rateLimitAlt(
+    errorCode: 'too many requests',
+    message: 'Muitas requisições. Tente novamente mais tarde.',
   ),
   unknown(
     errorCode: 'unknown',
     message:
-        'Ocorreu um erro ao realizar a solicitação, tente novamente mais tarde',
+        'Ocorreu um erro ao realizar a solicitação, tente novamente mais tarde.',
   );
 
   const SupabaseAuthErrorType({

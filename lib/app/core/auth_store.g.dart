@@ -33,6 +33,22 @@ mixin _$AuthStore on AuthStoreBase, Store {
     });
   }
 
+  late final _$isResettingPasswordAtom =
+      Atom(name: 'AuthStoreBase.isResettingPassword', context: context);
+
+  @override
+  bool get isResettingPassword {
+    _$isResettingPasswordAtom.reportRead();
+    return super.isResettingPassword;
+  }
+
+  @override
+  set isResettingPassword(bool value) {
+    _$isResettingPasswordAtom.reportWrite(value, super.isResettingPassword, () {
+      super.isResettingPassword = value;
+    });
+  }
+
   late final _$loggedUserAtom =
       Atom(name: 'AuthStoreBase.loggedUser', context: context);
 
@@ -85,6 +101,28 @@ mixin _$AuthStore on AuthStoreBase, Store {
       ActionController(name: 'AuthStoreBase', context: context);
 
   @override
+  void setResettingPassword(bool value) {
+    final _$actionInfo = _$AuthStoreBaseActionController.startAction(
+        name: 'AuthStoreBase.setResettingPassword');
+    try {
+      return super.setResettingPassword(value);
+    } finally {
+      _$AuthStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearPasswordReset() {
+    final _$actionInfo = _$AuthStoreBaseActionController.startAction(
+        name: 'AuthStoreBase.clearPasswordReset');
+    try {
+      return super.clearPasswordReset();
+    } finally {
+      _$AuthStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUser(LoggedUserInfoEntity? user) {
     final _$actionInfo = _$AuthStoreBaseActionController.startAction(
         name: 'AuthStoreBase.setUser');
@@ -110,6 +148,7 @@ mixin _$AuthStore on AuthStoreBase, Store {
   String toString() {
     return '''
 loading: ${loading},
+isResettingPassword: ${isResettingPassword},
 loggedUser: ${loggedUser},
 tenant: ${tenant},
 userName: ${userName}

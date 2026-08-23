@@ -1,6 +1,8 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:verify/app/core/app_store.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -20,49 +22,102 @@ class CustomNavigationBar extends StatelessWidget {
           child: Container(
             height: 72,
             decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHigh, // Adaptativo ao tema
+              color: colorScheme.surface.withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(36),
               boxShadow: [
                 BoxShadow(
                   color: colorScheme.shadow.withValues(alpha: 0.1),
-                  blurRadius: 20,
+                  blurRadius: 30,
                   offset: const Offset(0, 10),
                 ),
               ],
               border: Border.all(
-                color: colorScheme.outlineVariant.withValues(alpha: 0.1),
+                color: colorScheme.outlineVariant.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNavItem(
-                  context: context,
-                  icon: Icons.grid_view_rounded,
-                  label: 'Home',
-                  isSelected: currentDestination == 0,
-                  onTap: () => _onTabSelected(0, currentDestination),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(36),
+              child: BackdropFilter(
+                filter:
+                    ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildNavItem(
+                      context: context,
+                      icon: Icons.receipt_long_rounded,
+                      label: 'Transações',
+                      isSelected: currentDestination == 1,
+                      onTap: () => _onTabSelected(1, currentDestination),
+                    ),
+                    _buildCentralLogoItem(
+                      context: context,
+                      isSelected: currentDestination == 0,
+                      onTap: () => _onTabSelected(0, currentDestination),
+                    ),
+                    _buildNavItem(
+                      context: context,
+                      icon: Icons.settings_rounded,
+                      label: 'Ajustes',
+                      isSelected: currentDestination == 2,
+                      onTap: () => _onTabSelected(2, currentDestination),
+                    ),
+                  ],
                 ),
-                _buildNavItem(
-                  context: context,
-                  icon: Icons.history_rounded,
-                  label: 'History',
-                  isSelected: currentDestination == 1,
-                  onTap: () => _onTabSelected(1, currentDestination),
-                ),
-                _buildNavItem(
-                  context: context,
-                  icon: Icons.person_rounded,
-                  label: 'Profile',
-                  isSelected: currentDestination == 2,
-                  onTap: () => _onTabSelected(2, currentDestination),
-                ),
-              ],
+              ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildCentralLogoItem({
+    required BuildContext context,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            colors: isSelected
+                ? [colorScheme.primary, colorScheme.secondary]
+                : [colorScheme.surfaceContainerHighest, colorScheme.surfaceContainer],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: colorScheme.primary.withValues(alpha: 0.4),
+                    blurRadius: 15,
+                    offset: const Offset(0, 4),
+                  )
+                ]
+              : null,
+        ),
+        child: Center(
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              isSelected ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
+              BlendMode.srcIn,
+            ),
+            child: SvgPicture.asset(
+              'assets/svg/logo.svg',
+              height: 28,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -92,23 +147,39 @@ class CustomNavigationBar extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(30),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
               ? colorScheme.primary.withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Icon(
-          icon,
-          color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-          size: 28,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+              size: 24,
+            ),
+            if (isSelected) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: textTheme.labelMedium?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ]
+          ],
         ),
       ),
     );

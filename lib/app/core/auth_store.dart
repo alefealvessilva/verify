@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:verify/app/modules/auth/domain/entities/logged_user_info.dart';
 import 'package:verify/app/modules/auth/domain/usecase/i_get_logged_user_usecase.dart';
 import 'package:verify/app/modules/auth/domain/usecase/i_logout_usecase.dart';
@@ -11,14 +13,29 @@ part 'auth_store.g.dart';
 class AuthStore = AuthStoreBase with _$AuthStore;
 
 abstract class AuthStoreBase with Store {
+  StreamSubscription<AuthState>? _authSubscription;
+
   @observable
   bool loading = false;
+
+  @observable
+  bool isResettingPassword = false;
 
   @observable
   LoggedUserInfoEntity? loggedUser;
 
   @observable
   TenantModel? tenant;
+
+  @action
+  void setResettingPassword(bool value) {
+    isResettingPassword = value;
+  }
+
+  @action
+  void clearPasswordReset() {
+    isResettingPassword = false;
+  }
 
   @computed
   String get userName {
@@ -99,8 +116,37 @@ abstract class AuthStoreBase with Store {
     }
   }
 
+  void initAuthListener() {
+    _authSubscription?.cancel();
+    _authSubscription =
+        Supabase.instance.client.auth.onAuthStateChange.listen((data) async {
+      final event = data.event;
+      debugPrint('AuthStore: onAuthStateChange event -> $event');
+
+      if (event == AuthChangeEvent.passwordRecovery) {
+        runInAction(() {
+          isResettingPassword = true;
+        });
+      } else if (event == AuthChangeEvent.signedIn ||
+          event == AuthChangeEvent.userUpdated) {
+        if (!isResettingPassword) {
+          await loadData();
+        }
+      } else if (event == AuthChangeEvent.signedOut) {
+        runInAction(() {
+          isResettingPassword = false;
+          loggedUser = null;
+          tenant = null;
+        });
+      }
+    });
+  }
+
   @action
   void dispose() {
+    _authSubscription?.cancel();
+    _authSubscription = null;
+    isResettingPassword = false;
     loading = false;
     loggedUser = null;
     tenant = null;

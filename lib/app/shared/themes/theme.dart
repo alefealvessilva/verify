@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 part 'color_schemes.g.dart';
 part 'app_bar_theme.g.dart';
 part 'input_decoration_theme.g.dart';
@@ -11,6 +12,7 @@ part 'navigation_bar_theme.g.dart';
 ThemeData get lightTheme => ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: _lightColorScheme.surface,
+      textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
       radioTheme: _lightRadioTheme,
       colorScheme: _lightColorScheme,
       iconButtonTheme: _lightIconButtonTheme,
@@ -24,6 +26,7 @@ ThemeData get lightTheme => ThemeData(
 ThemeData get darkTheme => ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: _darkColorScheme.surface,
+      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
       radioTheme: _darkRadioTheme,
       colorScheme: _darkColorScheme,
       iconTheme: _darkIconThemeData,
